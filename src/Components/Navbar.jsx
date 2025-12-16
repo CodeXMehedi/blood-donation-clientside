@@ -1,28 +1,99 @@
 import { IoLogoFacebook } from "react-icons/io5";
 import { FaXTwitter, FaYoutube } from 'react-icons/fa6';
-import React from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { FaPhoneAlt } from 'react-icons/fa';
+import { AuthContext } from '../Contexts/AuthContext';
+import toast from 'react-hot-toast';
+import userDefaultLogo from '../assets/logouser-D4eLv0KQ.jpg'
 
 const Navbar = () => {
+  const { user, logOut } = use(AuthContext);
+  const [isChecked, setIsChecked] = useState(false);
+  const handleLogOut = () => {
+
+    logOut()
+      .then(() => {
+        toast.success("Logged Out successful");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  const handleTheme = () => {
+    setIsChecked(prev => !prev);
+  };
+  useEffect(() => {
+    const theme = isChecked ? "dark" : 'light';
+    document.documentElement.setAttribute("data-theme", theme);
+  }, [isChecked]);
+
   const links = <>
     <div className='text-lg'>
       <NavLink to='/'>Home</NavLink>
-
     </div>
   </>
   return (
     <>
-      <div className="bg-[#B11226]">
-        <div className='flex justify-between items-center w-11/12 m-auto py-1 '>
+      <div className="bg-[#8A0303]">
+        <div className='flex justify-between items-center w-11/12 m-auto py-1'>
           <div className='flex gap-4 text-white'>
             <p>East Shibgonj, Sylhet, 3100</p>
             <p className='flex items-center gap-1'><FaPhoneAlt />+880-1891-82709</p>
           </div>
-          <div className='flex items-center gap-4'>
-            <Link className='font-medium p-1 px-2 rounded-sm  bg-[#A8E6A3]'>Login</Link>
-            <Link className='font-medium p-1 px-2 rounded-sm  bg-[#A8E6A3]'>Register</Link>
 
+          <div className='flex items-center gap-4'>
+            <div className=" flex items-center  gap-2 ">
+              <label className="flex cursor-pointer gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <circle cx="12" cy="12" r="5" />
+                  <path
+                    d="M12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" />
+                </svg>
+                <input onClick={handleTheme} type="checkbox" value="synthwave" className="toggle theme-controller" />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                </svg>
+              </label>
+              <img
+                className='w-9 h-9 rounded-4xl'
+                src={user ? user.photoURL : userDefaultLogo}
+                title={user?.displayName || 'User name'}
+                alt=""
+              />
+
+              {user ? (
+                <button
+                  onClick={handleLogOut}
+                  className=" font-medium p-1 px-2 rounded-sm  bg-[#EF4444]">
+                  Log Out
+                </button>
+              ) : (
+                <div className='flex gap-2'>
+                    <Link to='/login' className='font-medium p-1 px-2 rounded-sm   bg-[#EF4444]'>Login</Link>
+                    <Link to='/register' className='font-medium p-1 px-2 rounded-sm  bg-[#EF4444]'>Register</Link>
+                </div>
+              )}
+            </div>
             <a href=""><IoLogoFacebook /></a>
             <a href=""><FaXTwitter /></a>
             <a href=""><FaYoutube /></a>
