@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 
 const RootLayout = () => {
   return (
-    <div>
+    <div className='bg-[#E8F5F0]'>
       <Navbar></Navbar>
       <Outlet></Outlet>
     </div>
