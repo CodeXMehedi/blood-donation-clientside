@@ -30,8 +30,35 @@ const Navbar = () => {
   }, [isChecked]);
 
   const links = <>
-    <div className='text-lg'>
-      <NavLink to='/'>Home</NavLink>
+    <div className='text-lg font-semibold text-[#8A0303] flex gap-4 items-center'>
+      <NavLink  to='/'>Home</NavLink>
+      <NavLink to='/'>Donation Request</NavLink>
+      <NavLink to='/'>Funding</NavLink>
+      
+      {user && (
+        <div className="dropdown dropdown-end ">
+          <div tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full">
+              <img
+                src={user?.photoURL || "https://i.ibb.co/5r5mJjH/user.png"}
+                title={user?.displayName}
+                alt="user avatar"
+              />
+            </div>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-40"
+          >
+            <li>
+              <NavLink to="/dashboard" className='font-medium p-2 px-2 rounded-sm  bg-[#EF4444] mb-1 '>Dashboard</NavLink>
+            </li>
+            <li>
+              <button onClick={handleLogOut} className='font-medium p-2 px-2 rounded-sm  bg-[#EF4444]'>Logout</button>
+            </li>
+          </ul>
+        </div>
+      )}
     </div>
   </>
   return (
@@ -74,29 +101,23 @@ const Navbar = () => {
                   <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                 </svg>
               </label>
-              <img
+              {!user && <img
                 className='w-9 h-9 rounded-4xl'
-                src={user ? user.photoURL : userDefaultLogo}
-                title={user?.displayName || 'User name'}
+                src={!user && userDefaultLogo}
+                title={'User name'}
                 alt=""
               />
-
-              {user ? (
-                <button
-                  onClick={handleLogOut}
-                  className=" font-medium p-1 px-2 rounded-sm  bg-[#EF4444]">
-                  Log Out
-                </button>
-              ) : (
+              }
+              {!user && (
                 <div className='flex gap-2'>
                     <Link to='/login' className='font-medium p-1 px-2 rounded-sm   bg-[#EF4444]'>Login</Link>
-                    <Link to='/register' className='font-medium p-1 px-2 rounded-sm  bg-[#EF4444]'>Register</Link>
+                    {/* <Link to='/register' className='font-medium p-1 px-2 rounded-sm  bg-[#EF4444]'>Register</Link> */}
                 </div>
               )}
             </div>
-            <a href=""><IoLogoFacebook /></a>
-            <a href=""><FaXTwitter /></a>
-            <a href=""><FaYoutube /></a>
+            <a className="text-white" href=""><IoLogoFacebook /></a>
+            <a className="text-white" href=""><FaXTwitter /></a>
+            <a className="text-white" href=""><FaYoutube /></a>
 
           </div>
         </div>
