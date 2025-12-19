@@ -7,6 +7,7 @@ import DashboardLayout from "../DashboardLayout.jsx/DashboardLayout";
 import MainDashboard from "../Pages/Dashboard/MainDashboard";
 import Profile from "../Pages/Dashboard/Profile";
 import DonorHomePage from "../Pages/Donor/DonorHomePage";
+import CreateDonationRequest from "../Pages/Dashboard/CreateDonationRequest";
 
 
 
@@ -17,17 +18,17 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element:<Home></Home>
+        element: <Home></Home>
       },
       {
         path: '/register',
-        element:<Register></Register>
+        element: <Register></Register>
       },
       {
         path: '/login',
-        element:<Login></Login>
+        element: <Login></Login>
       }
-      
+
     ]
   },
   {
@@ -36,11 +37,16 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element:<DonorHomePage></DonorHomePage>
-    },
+        element: <DonorHomePage></DonorHomePage>
+      },
       {
         path: 'profile',
-        element:<Profile></Profile>
+        element: <Profile></Profile>
+      },
+      {
+        path: '/dashboard/create-donation-request',
+        element:<CreateDonationRequest></CreateDonationRequest>
+
       }
     ]
   }

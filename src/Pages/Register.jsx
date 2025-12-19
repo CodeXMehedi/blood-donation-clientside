@@ -6,6 +6,7 @@ import { Eye, EyeClosed } from 'lucide-react';
 import toast from 'react-hot-toast';
 import DocumentMeta from 'react-document-meta';
 import axios from 'axios';
+import useAxios from '../hooks/useAxios';
 
 // const googleProvider = new GoogleAuthProvider();
 const Register = () => {
@@ -34,6 +35,8 @@ const Register = () => {
   const [districts, setDistricts] = useState([]);
   const [district, setDistrict] = useState('');
   const [upazila, setUpazila] = useState('');
+  const axiosInstance = useAxios();
+
   useEffect(() => {
     axios.get('/Upazilas.json').then(res => {
       setUpazilas(res.data);
@@ -113,7 +116,7 @@ const Register = () => {
             setUser({ ...user, displayName: name, photoURL: imageUrl });
 
             //store data in the database
-            axios.post('http://localhost:5000/users', formData).then(res => {
+            axiosInstance.post('/users', formData).then(res => {
               console.log(res.data);
             }).catch(err => {
               console.log(err);
