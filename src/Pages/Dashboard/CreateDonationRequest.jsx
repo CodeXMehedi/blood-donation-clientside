@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState} from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
 import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 import useAxios from "../../hooks/useAxios";
 
 const CreateDonationRequest = () => {
@@ -12,12 +13,12 @@ const CreateDonationRequest = () => {
   const [district, setDistrict] = useState('');
   const [upazila, setUpazila] = useState('');
   const axiosInstance = useAxios();
-
+  const axiosSecure = useAxiosSecure();
 
  useEffect(() => {
     if (!user?.email || loading) return;
 
-    axiosInstance.get('/users', {
+   axiosInstance.get('/users', {
       params: { email: user?.email }
     })
       .then(res => {
@@ -77,7 +78,7 @@ const CreateDonationRequest = () => {
     if (userData?.status == 'active') {
       
     
-      axiosInstance.post('/create-donation-request', donationRequestData)
+      axiosSecure.post('/create-donation-request', donationRequestData)
         .then(res => {
           console.log(res);
           toast.success('Request add successful')

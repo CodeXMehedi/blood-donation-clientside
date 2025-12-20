@@ -60,9 +60,7 @@ const MyDonationRequests = () => {
                 <td>{r.donationStatus}</td>
                 <td>Blue</td>
               </tr>))}
-
             </tbody>
-
           </table>
         </div>
       </div>
