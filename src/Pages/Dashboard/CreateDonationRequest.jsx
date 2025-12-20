@@ -8,9 +8,26 @@ const CreateDonationRequest = () => {
   const { user, loading } = useContext(AuthContext);
  const [upazilas, setUpazilas] = useState([]);
   const [districts, setDistricts] = useState([]);
+  const [userData, setUserData] = useState([]);
   const [district, setDistrict] = useState('');
   const [upazila, setUpazila] = useState('');
   const axiosInstance = useAxios();
+
+
+ useEffect(() => {
+    if (!user?.email || loading) return;
+
+    axiosInstance.get('/users', {
+      params: { email: user?.email }
+    })
+      .then(res => {
+        setUserData(res.data);
+      })
+      .catch(err => console.log(err));
+
+  }, [user?.email, loading]);
+
+
   useEffect(() => {
     axios.get('/Upazilas.json').then(res => {
       setUpazilas(res.data);
@@ -57,14 +74,16 @@ const CreateDonationRequest = () => {
       message,
       donationStatus: "pending",
     };
-
-    axiosInstance.post('/create-donation-request', donationRequestData)
-      .then(res => {
-        console.log(res);
-        toast.success('Request add successful')
-      }).catch(err=>console.log(err))
-  };
-
+    if (userData?.status == 'active') {
+      
+    
+      axiosInstance.post('/create-donation-request', donationRequestData)
+        .then(res => {
+          console.log(res);
+          toast.success('Request add successful')
+        }).catch(err => console.log(err))
+    };
+  }
 
   return (
     <div className="max-w-xl mx-auto p-4 bg-white rounded-xl shadow-xl my-4">
