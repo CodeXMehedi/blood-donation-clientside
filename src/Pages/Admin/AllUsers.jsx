@@ -9,17 +9,37 @@ const AllUsers = () => {
   // const axiosSecure = useAxiosSecure();
   const [users, setUsers] = useState([]);
   const { user } = useContext(AuthContext);
+  
 
-  useEffect(() => {
-    if (!user) return;
+  const fetchUsers = () => {
     axiosInstance.get('/users')
-    // axiosSecure.get('/users')
-    
+      // axiosSecure.get('/users')
+
       .then(res => {
         setUsers(res.data);
       })
+  }
+  useEffect(() => {
+    fetchUsers();
+
   }, [user]);
-  
+
+  const handleStatus = (email, status) => {
+    axiosInstance.patch(`/user/update/status?email=${email}&status=${status}`)
+      .then(res => {
+        console.log(res.data);
+        fetchUsers();
+      })
+  }
+
+  const handleRole = (email, role) => {
+    axiosInstance.patch(`/user/update/role?email=${email}&role=${role}`)
+      .then(res => {
+        console.log(res.data);
+        fetchUsers();
+      })
+  }
+
   return (
     <div>
       <div className="overflow-x-auto">
@@ -58,24 +78,68 @@ const AllUsers = () => {
                         </div>
                       </div>
                       <div>
-                        <div className="font-bold">{ user?.name}</div>
-                        <div className="text-sm opacity-50">{user?.email }</div>
+                        <div className="font-bold">{user?.name}</div>
+                        <div className="text-sm opacity-50">{user?.email}</div>
                       </div>
                     </div>
                   </td>
                   <td>
                     {user?.role}
                   </td>
-                  <td>{ user?.status}</td>
+                  <td>{user?.status}</td>
                   <th>
-                    <button className="btn btn-ghost btn-xs">details</button>
+                    {
+                      
+                        user?.role !== 'admin' && (
+                        user?.status !== 'active' && user?.role === 'donor' ? (
+                          <button
+                            onClick={() => handleStatus(user?.email, 'active')}
+                            className="btn btn-ghost btn-xs"
+                          >
+                            Unblock
+                          </button>
+                        ) : (
+                          <button
+                            onClick={() => handleStatus(user?.email, 'blocked')}
+                            className="btn btn-error btn-xs"
+                          >
+                            Block
+                          </button>
+                        )
+                      )
+                    }
                   </th>
                 </tr>
               )
-          }
-           
+            }
+            {
+              user?.role == 'donor' &&
+              user?.status == 'active' && (
+                <button
+                  onClick={() => handleRole(user?.email, 'volunteer')}
+                  className="btn btn-info btn-xs"
+                >
+                  Make Volunteer
+                </button>
+              )
+            }
+
+            {
+              user?.role !== 'admin' &&
+              (user?.role == 'donor' || user?.role == 'volunteer') &&
+              user?.status == 'active' && (
+                <button
+                  onClick={() => handleRole(user?.email, 'admin')}
+                  className="btn btn-warning btn-xs"
+                >
+                  Make Admin
+                </button>
+              )
+            }
+
+
           </tbody>
-         
+
         </table>
       </div>
     </div>
