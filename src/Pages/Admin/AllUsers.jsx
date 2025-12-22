@@ -88,55 +88,57 @@ const AllUsers = () => {
                   </td>
                   <td>{user?.status}</td>
                   <th>
-                    {
-                      
+                    <div className='flex gap-2 text-white'>
+                      {
+
                         user?.role !== 'admin' && (
-                        user?.status !== 'active' && user?.role === 'donor' ? (
+                          user?.status !== 'active' && user?.role === 'donor' ? (
+                            <button
+                              onClick={() => handleStatus(user?.email, 'active')}
+                              className="btn btn-ghost btn-xs"
+                            >
+                              Unblock
+                            </button>
+                          ) : (
+                            <button
+                              onClick={() => handleStatus(user?.email, 'blocked')}
+                              className="btn btn-error btn-xs"
+                            >
+                              Block
+                            </button>
+                          )
+                        )
+                      }
+                      {
+                        user?.role == 'donor' &&
+                        user?.status == 'active' && (
                           <button
-                            onClick={() => handleStatus(user?.email, 'active')}
-                            className="btn btn-ghost btn-xs"
+                            onClick={() => handleRole(user?.email, 'volunteer')}
+                            className="btn btn-info btn-xs"
                           >
-                            Unblock
-                          </button>
-                        ) : (
-                          <button
-                            onClick={() => handleStatus(user?.email, 'blocked')}
-                            className="btn btn-error btn-xs"
-                          >
-                            Block
+                            Make Volunteer
                           </button>
                         )
-                      )
-                    }
+                      }
+
+                      {
+                        user?.role !== 'admin' &&
+                        (user?.role == 'donor' || user?.role == 'volunteer') &&
+                        user?.status == 'active' && (
+                          <button
+                            onClick={() => handleRole(user?.email, 'admin')}
+                            className="btn btn-warning btn-xs"
+                          >
+                            Make Admin
+                          </button>
+                        )
+                      }
+                    </div>
                   </th>
                 </tr>
               )
             }
-            {
-              user?.role == 'donor' &&
-              user?.status == 'active' && (
-                <button
-                  onClick={() => handleRole(user?.email, 'volunteer')}
-                  className="btn btn-info btn-xs"
-                >
-                  Make Volunteer
-                </button>
-              )
-            }
-
-            {
-              user?.role !== 'admin' &&
-              (user?.role == 'donor' || user?.role == 'volunteer') &&
-              user?.status == 'active' && (
-                <button
-                  onClick={() => handleRole(user?.email, 'admin')}
-                  className="btn btn-warning btn-xs"
-                >
-                  Make Admin
-                </button>
-              )
-            }
-
+           
 
           </tbody>
 

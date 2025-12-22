@@ -105,14 +105,14 @@ const Aside = () => {
           </NavLink>
 
           <NavLink
-            to="/admin/districts"
+            to="/dashboard/all-donation-request"
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg transition 
             ${isActive ? "bg-white text-[#B11226]" : "hover:bg-red-700"}`
             }
           >
-            <MapPin size={20} />
-            Districts
+            <Droplet size={20} />
+            All donation request
           </NavLink>
 
           <NavLink
