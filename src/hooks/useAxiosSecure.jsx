@@ -1,35 +1,47 @@
-import axios from "axios";
-import { useContext, useEffect } from "react";
+import axios from "axios"; import {  useContext, useEffect } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
 
 
-const axiosSecure = axios.create({
-  baseURL:'http://localhost:5000'
-})
+
+const axiosSecure = axios.create({ baseURL: "http://localhost:5000" });
 
 const useAxiosSecure = () => {
-  const { user } = useContext(AuthContext);
-  useEffect(() => {
-    console.log(user.accessToken)
-    const reqInterceptor = axiosSecure.interceptors.request.use(config => {
-      config.headers.Authorization = `Bearer ${user?.accessToken}`
-      return config
-    })
+  const {user} = useContext(AuthContext);
+  
 
-    const resInterceptor = axiosSecure.interceptors.response.use((response) => {
-      return response
-    }, (error) => {
-      console.log(error);
-      return Promise.reject(error)
-    })
+  useEffect(() => { // only add interceptor when token exists if (!user?.accessToken) return;
+
+    const requestInterceptor = axiosSecure.interceptors.request.use(
+      (config) => {
+        config.headers.Authorization = `Bearer ${user.accessToken}`;
+        return config;
+      }
+    );
+
+    const responseInterceptor = axiosSecure.interceptors.response.use(
+      (res) => res,
+      async (error) => {
+        const statusCode = error?.status;
+
+        if (statusCode === 401 || statusCode === 403) {
+          alert("Forbidden user detected");
+
+          // await logout();
+          // navigate("/login");
+        }
+
+        console.log("Axios Secure Error:", error);
+        return Promise.reject(error);
+      }
+    );
 
     return () => {
-      axiosSecure.interceptors.request.eject(reqInterceptor);
-      axiosSecure.interceptors.response.eject(resInterceptor);
-    }
-  }, [user])
-  
-  return axiosSecure
-}
+      axiosSecure.interceptors.request.eject(requestInterceptor);
+      axiosSecure.interceptors.response.eject(responseInterceptor);
+    };
+  }, [user?.accessToken]);
 
-export default useAxiosSecure
+  return axiosSecure;
+};
+
+export default useAxiosSecure;

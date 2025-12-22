@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { AuthContext } from './AuthContext';
+import React, {   useEffect, useState } from 'react';
 import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile } from 'firebase/auth';
 import { auth } from '../firebase/firebase.init';
+// import useAxiosSecure from '../hooks/useAxiosSecure';
+import { AuthContext } from './AuthContext';
+// import useAxios from '../hooks/useAxios';
+// import axios from 'axios';
 
-import useAxios from '../hooks/useAxios';
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [loading, setLoading] = useState(true);
-  const [role, setRole] = useState('');
-  const axiosInstance = useAxios();
-  
+  // const [role, setRole] = useState('');
+  // const axiosInstance = useAxios();
+  // console.log(role);
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password)
@@ -44,15 +46,16 @@ const AuthProvider = ({ children }) => {
     }
   }, [])
 
-  useEffect(() => {
-    if (!user) return;
-    axiosInstance.get(`/users/role/${user.email}`).then(res => {
+  // useEffect(() => {
+  //   axios.get(`http://localhost:5000/users/role/${user.email}`)
+  //     .then(res => {
+       
+  //       setRole(res.data.role);
+  //     })
+  // }, [user])
+  
 
-      setRole(res.data.role);
-    })
-  }, [user])
-
-  // console.log(role);
+  
   const authInfo = {
     user,
     createUser,
@@ -62,8 +65,8 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
     logOut,
-    signInWithGoogle,
-    role
+    signInWithGoogle
+    // role
   }
   return (
     <AuthContext value={authInfo}>

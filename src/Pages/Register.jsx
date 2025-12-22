@@ -8,6 +8,8 @@ import DocumentMeta from 'react-document-meta';
 import axios from 'axios';
 import useAxios from '../hooks/useAxios';
 
+
+
 // const googleProvider = new GoogleAuthProvider();
 const Register = () => {
 

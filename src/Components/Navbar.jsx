@@ -3,9 +3,11 @@ import { FaXTwitter, FaYoutube } from 'react-icons/fa6';
 import React, { use, useEffect, useState } from 'react';
 import { Link, NavLink } from 'react-router';
 import { FaPhoneAlt } from 'react-icons/fa';
-import { AuthContext } from '../Contexts/AuthContext';
+import { AuthContext } from "../Contexts/AuthContext";
 import toast from 'react-hot-toast';
 import userDefaultLogo from '../assets/logouser-D4eLv0KQ.jpg'
+
+
 
 const Navbar = () => {
   const { user, logOut } = use(AuthContext);

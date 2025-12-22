@@ -1,7 +1,7 @@
 import { use } from "react";
 import { AuthContext } from "../Contexts/AuthContext";
-import { useLocation } from "react-router";
-
+import { Navigate, useLocation } from "react-router";
+import Loading from "../Components/Loading";
 
 
 const PrivateRoute = ({ children }) => {
@@ -9,8 +9,8 @@ const PrivateRoute = ({ children }) => {
   const location = useLocation();
 
   // console.log(location)
-  if (loading) {
-    return <p>Loading...</p>;
+  if (loading ) {
+    return <Loading></Loading>;
   }
   if (user && user?.email) {
     return children;
