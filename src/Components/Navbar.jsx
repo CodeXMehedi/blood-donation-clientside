@@ -34,7 +34,7 @@ const Navbar = () => {
   const links = <>
     <div className='text-lg font-semibold text-[#8A0303] flex gap-4 items-center'>
       <NavLink  to='/'>Home</NavLink>
-      <NavLink to='/'>Donation Request</NavLink>
+      <NavLink to='/all-donation-request'>Donation Request</NavLink>
       <NavLink to='/'>Funding</NavLink>
       
       {user && (

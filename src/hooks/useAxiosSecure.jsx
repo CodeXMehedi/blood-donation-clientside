@@ -3,7 +3,7 @@ import { AuthContext } from "../Contexts/AuthContext";
 
 
 
-const axiosSecure = axios.create({ baseURL: "http://localhost:5000" });
+const axiosSecure = axios.create({ baseURL: "https://blood-donation-server-weld.vercel.app/" });
 
 const useAxiosSecure = () => {
   const {user} = useContext(AuthContext);
