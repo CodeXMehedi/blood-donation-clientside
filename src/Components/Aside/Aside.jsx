@@ -16,29 +16,29 @@ import toast from "react-hot-toast";
 
 
 const Aside = () => {
-  const { user,logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext);
   const [role, setRole] = useState('');
   // const { role } = useContext(AuthContext);
-
+console.log(role)
   useEffect(() => {
     axios.get(`http://localhost:5000/users/role/${user.email}`)
       .then(res => {
-       
+
         setRole(res.data.role);
       })
   }, [user])
-  
+
   const handleLogOut = () => {
-  
-      logOut()
-        .then(() => {
-          toast.success("Logged Out successful");
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    };
-  
+
+    logOut()
+      .then(() => {
+        toast.success("Logged Out successful");
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
 
   return (
 
@@ -65,7 +65,7 @@ const Aside = () => {
             Dashboard
           </NavLink>
 
-        
+
           {
             role == 'admin' && (
               <NavLink
@@ -79,8 +79,8 @@ const Aside = () => {
                 All Users
               </NavLink>
             )
-            }
-           
+          }
+
           {/* create donation request */}
           <NavLink
             to="/dashboard/create-donation-request"
@@ -92,6 +92,7 @@ const Aside = () => {
             <Droplet size={20} />
             Create Donation Request
           </NavLink>
+
           {/* My donation request */}
           <NavLink
             to="/dashboard/my-donation-requests"
@@ -104,27 +105,20 @@ const Aside = () => {
             My Donation Requests
           </NavLink>
 
-          <NavLink
-            to="/dashboard/all-donation-request"
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-2 rounded-lg transition 
+          {
+            role == 'admin' && (<NavLink
+              to="/dashboard/all-donation-request"
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-2 rounded-lg transition 
             ${isActive ? "bg-white text-[#B11226]" : "hover:bg-red-700"}`
-            }
-          >
-            <Droplet size={20} />
-            All donation request
-          </NavLink>
-
-          <NavLink
-            to="/admin/reports"
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-2 rounded-lg transition 
-            ${isActive ? "bg-white text-[#B11226]" : "hover:bg-red-700"}`
-            }
-          >
-            <FileBarChart size={20} />
-            Reports
-          </NavLink>
+              }
+            >
+              <Droplet size={20} />
+              All donation request
+            </NavLink>
+            )
+          }
+         
         </nav>
 
         {/* Logout */}

@@ -14,66 +14,84 @@ import AllUsers from "../Pages/Admin/AllUsers";
 import AllDonationRequest from "../Pages/Admin/AllDonationRequest";
 import DonationRequest from "../Pages/DonationRequest";
 import Details from "../Components/Details";
+import SearchDonor from "../Pages/SearchDonor/SearchDonor";
+import Funding from "../Pages/Funding/Funding";
 
 
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: '/',
     element: <RootLayout></RootLayout>,
     children: [
       {
         index: true,
-        element: <Home></Home>
+        element: <Home></Home>,
       },
       {
         path: '/register',
-        element: <Register></Register>
+        element: <Register></Register>,
       },
       {
         path: '/login',
-        element: <Login></Login>
+        element: <Login></Login>,
       },
       {
         path: '/all-donation-request',
-        element:<DonationRequest></DonationRequest>
+        element: <DonationRequest></DonationRequest>,
       },
       {
         path: '/all-donation-request/details/:id',
-        element:<Details></Details>
+        element: (
+          <PrivateRoute>
+            <Details></Details>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: '/search-donors',
+        element:<SearchDonor></SearchDonor>
+      },
+      {
+        path: '/funding',
+        element: <PrivateRoute>
+          <Funding></Funding>
+        </PrivateRoute>
       }
-
-    ]
+    ],
   },
   {
     path: '/dashboard',
-    element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout></DashboardLayout>
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
-        element: <DonorHomePage></DonorHomePage>
+        element: <DonorHomePage></DonorHomePage>,
       },
       {
         path: 'profile',
-        element: <Profile></Profile>
+        element: <Profile></Profile>,
       },
       {
         path: '/dashboard/create-donation-request',
-        element:<CreateDonationRequest></CreateDonationRequest>
-
+        element: <CreateDonationRequest></CreateDonationRequest>,
       },
       {
         path: '/dashboard/my-donation-requests',
-        element:<MyDonationRequests></MyDonationRequests>
+        element: <MyDonationRequests></MyDonationRequests>,
       },
       {
-        path: "/dashboard/all-users",
-        element:<AllUsers></AllUsers>
+        path: '/dashboard/all-users',
+        element: <AllUsers></AllUsers>,
       },
       {
-        path: "/dashboard/all-donation-request",
-        element:<AllDonationRequest></AllDonationRequest>
-      }
-    ]
-  }
+        path: '/dashboard/all-donation-request',
+        element: <AllDonationRequest></AllDonationRequest>,
+      },
+    ],
+  },
 ]);

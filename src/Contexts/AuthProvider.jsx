@@ -13,6 +13,7 @@ const AuthProvider = ({ children }) => {
   // const [role, setRole] = useState('');
   // const axiosInstance = useAxios();
   // console.log(role);
+  console.log(user)
   const createUser = (email, password) => {
     setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password)

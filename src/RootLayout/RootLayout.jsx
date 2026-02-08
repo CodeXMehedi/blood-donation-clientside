@@ -10,8 +10,8 @@ const RootLayout = () => {
     <div className='bg-[#E8F5F0]'>
       <Navbar></Navbar>
       <Outlet></Outlet>
-      <Featured></Featured>
-      <ContactUs></ContactUs>
+      {/* <Featured></Featured>
+      <ContactUs></ContactUs> */}
       <Footer></Footer>
     </div>
   );

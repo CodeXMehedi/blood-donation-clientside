@@ -35,7 +35,7 @@ const Navbar = () => {
     <div className='text-lg font-semibold text-[#8A0303] flex gap-4 items-center'>
       <NavLink  to='/'>Home</NavLink>
       <NavLink to='/all-donation-request'>Donation Request</NavLink>
-      <NavLink to='/'>Funding</NavLink>
+      <NavLink to='/funding'>Funding</NavLink>
       
       {user && (
         <div className="dropdown dropdown-end ">

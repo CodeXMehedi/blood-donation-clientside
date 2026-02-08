@@ -1,14 +1,12 @@
-import React from "react";
+import React from 'react';
 
 const Footer = () => {
   return (
-    <div className="bg-[#8A0303] text-white">
+    <div className="bg-primary text-white">
       <div className="flex flex-col lg:flex-row gap-10 p-10 lg:p-20">
-
-        {/* 🔴 Brand Info */}
         <div className="flex-1 lg:ml-16 text-center lg:text-left">
           <div className="flex items-center justify-center lg:justify-start gap-2">
-            <p className="text-2xl font-bold">BloodCare</p>
+            <p className="text-3xl font-bold">Red Drop</p>
           </div>
           <p className="mt-6 text-sm">
             BloodCare is a voluntary blood donation platform connecting donors
@@ -19,7 +17,6 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* 🔗 Useful Links */}
         <div className="flex-1">
           <div className="flex flex-col h-full justify-center items-center gap-2">
             <a href="/">Home</a>
@@ -30,7 +27,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* 🌐 Social & Contact */}
         <div className="flex-1 m-auto text-center">
           <p className="font-semibold">Connect With Us</p>
           <p className="text-sm mt-1">Helpline: +880 1234-567890</p>
@@ -61,7 +57,6 @@ const Footer = () => {
             </a>
           </div>
         </div>
-
       </div>
     </div>
   );

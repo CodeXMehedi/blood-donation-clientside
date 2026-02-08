@@ -4,7 +4,7 @@ import Aside from '../Components/Aside/Aside';
 
 const DashboardLayout = () => {
   return (
-    <div className="flex min-h-screen bg-[#E6F4EA]">
+    <div className="flex min-h-screen ">
       <Aside></Aside>
        <main className="flex-1 p-6">
         <Outlet></Outlet>
