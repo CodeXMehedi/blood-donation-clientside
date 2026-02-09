@@ -95,7 +95,7 @@ const AllUsers = () => {
                           user?.status !== 'active' && user?.role === 'donor' ? (
                             <button
                               onClick={() => handleStatus(user?.email, 'active')}
-                              className="btn btn-ghost btn-xs"
+                              className="btn bg-green-400 btn-xs"
                             >
                               Unblock
                             </button>

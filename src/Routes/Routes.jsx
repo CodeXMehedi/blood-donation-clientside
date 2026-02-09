@@ -16,6 +16,8 @@ import DonationRequest from "../Pages/DonationRequest";
 import Details from "../Components/Details";
 import SearchDonor from "../Pages/SearchDonor/SearchDonor";
 import Funding from "../Pages/Funding/Funding";
+import FundingSuccess from "../Pages/Funding/FundingSuccess";
+import FundingCancelled from "../Pages/Funding/FundingCancelled";
 
 
 
@@ -50,14 +52,24 @@ export const router = createBrowserRouter([
       },
       {
         path: '/search-donors',
-        element:<SearchDonor></SearchDonor>
+        element: <SearchDonor></SearchDonor>,
       },
       {
         path: '/funding',
-        element: <PrivateRoute>
-          <Funding></Funding>
-        </PrivateRoute>
-      }
+        element: (
+          <PrivateRoute>
+            <Funding></Funding>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: 'funding/funding-success',
+        Component: FundingSuccess,
+      },
+      {
+        path: 'funding/funding-cancelled',
+        Component:FundingCancelled
+      },
     ],
   },
   {
