@@ -12,7 +12,7 @@ const FundingCancelled = () => {
         No worries — you can donate again when you’re ready.
       </p>
       <Link to={'/funding'} className="btn px-10 btn-primary">
-        Back
+       Try Again
       </Link>
     </div>
   );

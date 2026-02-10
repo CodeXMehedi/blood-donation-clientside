@@ -1,24 +1,74 @@
-import React, { useEffect, useState } from 'react';
-import { axiosInstance } from '../../hooks/axiosIns';
+import React, {  useEffect, useState } from 'react';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import toast from 'react-hot-toast';
+import { AuthContext } from '../../Contexts/AuthContext';
+import { Link } from 'react-router';
 
 const AllDonationRequest = () => {
+  // const { user } = useContext(AuthContext);
   const [allRequest, setAllRequest] = useState([]);
-  
+   const [statusFilter, setStatusFilter] = useState('all');
+   const axiosSecure = useAxiosSecure();
+   
   useEffect(() => {
-    axiosInstance.get('/all-donation-request')
-          // axiosSecure.get('/all-donation-request')
-    
+    axiosSecure.get('/all-donation-request')
           .then(res => {
             setAllRequest(res.data);
           })
-  })
+  },[axiosSecure])
+
+  const handleDoneCancel = async (id, status) => {
+   
+      try {
+      
+      await  axiosSecure.patch(
+          `/all-donation-request/status?id=${id}&donationStatus=${status}`
+        );
+        toast.success('Marked as Done');
+        const res = await axiosSecure.get(`/all-donation-request`);
+        setAllRequest(res.data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+  
+  
+    const handleDelete= async(id) => {
+      await  axiosSecure.delete(
+          `/all-donation-request/delete?id=${id}`,
+        );
+      toast.success('Deleted');
+       const res = await axiosSecure.get(`/all-donation-request`);
+  
+       setAllRequest(res.data);
+  }
+  
+  const filteredRequests =
+    statusFilter === 'all'
+      ? allRequest
+      : allRequest.filter(
+          r => r.donationStatus?.toLowerCase() === statusFilter.toLowerCase(),
+        );
 
   return (
     <div>
-      <div className='flex min-h-screen justify-center items-center' >
-        <div className='flex flex-col justify-center items-center'>
+      <div className="flex min-h-screen justify-center items-center">
+        <div className="flex flex-col justify-center items-center">
+          <h3 className="text-4xl font-semibold mb-8 text-primary">
+            All Blood Donation Requests{' '}
+          </h3>
+          <select
+            value={statusFilter}
+            onChange={e => setStatusFilter(e.target.value)}
+            className="select select-bordered mb-6"
+          >
+            <option value="all">All</option>
+            <option value="pending">Pending</option>
+            <option value="inprogress">Inprogress</option>
+            <option value="done">Done</option>
+            <option value="cancelled">Cancelled</option>
+          </select>
 
-          <h3 className='text-xl font-semibold mb-4'>All Blood Donation Requests </h3>
           <div className="overflow-x-auto">
             <table className="table table-xs">
               <thead>
@@ -32,16 +82,60 @@ const AllDonationRequest = () => {
                 </tr>
               </thead>
               <tbody>
-                {allRequest.map((r) => (<tr key={r._id}>
-
-                  <td>{r.requesterName}</td>
-                  <td>{r.upazila},{r.district}</td>
-                  <td>{r.donationDate}</td>
-                  <td>{r.donationTime}</td>
-                  <td>{r.bloodGroup}</td>
-                  <td>{r.donationStatus}</td>
-                  <td>Blue</td>
-                </tr>))}
+                {filteredRequests
+                  .filter(
+                    r =>
+                      r.donationStatus == 'Inprogress' ||
+                      r.donationStatus == 'Done' ||
+                      r.donationStatus == 'pending' ||
+                      r.donationStatus == 'Cancelled',
+                  )
+                  .map(r => (
+                    <tr key={r._id}>
+                      <td>{r.requesterName}</td>
+                      <td>
+                        {r.upazila},{r.district}
+                      </td>
+                      <td>{r.donationDate}</td>
+                      <td>{r.donationTime}</td>
+                      <td>{r.bloodGroup}</td>
+                      <td>{r.donationStatus}</td>
+                      <td className="flex gap-2">
+                        {r.donationStatus == 'Inprogress' && (
+                          <Link
+                            onClick={() => {
+                              handleDoneCancel(r._id, 'Done');
+                            }}
+                            className="btn btn-sm bg-green-400 text-white"
+                          >
+                            Done
+                          </Link>
+                        )}
+                        {r.donationStatus == 'Inprogress' && (
+                          <Link
+                            onClick={() => {
+                              handleDoneCancel(r._id, 'Cancelled');
+                            }}
+                            className="btn btn-sm bg-error text-white"
+                          >
+                            Cancel
+                          </Link>
+                        )}
+                        <button
+                          onClick={() => handleDelete(r._id)}
+                          className="btn btn-sm bg-secondary text-white"
+                        >
+                          Delete
+                        </button>
+                        <Link
+                          to={`/dashboard/edit-request/${r._id}`}
+                          className="btn btn-sm bg-sky-500 text-white"
+                        >
+                          Edit
+                        </Link>
+                      </td>
+                    </tr>
+                  ))}
               </tbody>
             </table>
           </div>

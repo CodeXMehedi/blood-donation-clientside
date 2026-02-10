@@ -3,7 +3,8 @@ import React, { useContext, useEffect, useState} from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { AuthContext } from "../../Contexts/AuthContext";
-import useAxios from "../../hooks/useAxios";
+
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 const CreateDonationRequest = () => {
@@ -13,21 +14,24 @@ const CreateDonationRequest = () => {
   const [userData, setUserData] = useState([]);
   const [district, setDistrict] = useState('');
   const [upazila, setUpazila] = useState('');
-  const axiosInstance = useAxios();
+  const axiosInstance = useAxiosSecure();
 
  useEffect(() => {
     if (!user?.email || loading) return;
 
-   axiosInstance.get('/users/by-email', {
-      params: { email: user?.email }
-    })
-      .then(res => {
-        setUserData(res.data);
-      })
-      .catch(err => console.log(err));
+   axiosInstance
+     .get(
+       `/users/by-email?email=${user?.email}`,
+       //  , {
+       //  params: { email: user?.email },
+       //  }
+     )
+     .then(res => {
+       setUserData(res.data);
+     })
+     .catch(err => console.log(err));
 
-  }, [user?.email, loading]);
-
+  }, [user?.email, loading,axiosInstance]);
 
   useEffect(() => {
     axios.get('/Upazilas.json').then(res => {
@@ -78,11 +82,13 @@ const CreateDonationRequest = () => {
     if (userData?.status == 'active') {
       
     
-      axiosInstance.post('/create-donation-request', donationRequestData)
+      axiosInstance
+        .post('/create-donation-request', donationRequestData)
         .then(res => {
           console.log(res);
-          toast.success('Request add successful')
-        }).catch(err => console.log(err))
+          toast.success('Request add successful');
+        })
+        .catch(err => console.log(err));
     };
   }
 

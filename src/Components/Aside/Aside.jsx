@@ -10,8 +10,8 @@ import {
 } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Contexts/AuthContext";
-import axios from "axios";
 import toast from "react-hot-toast";
+import useAxiosSecure from "../../hooks/useAxiosSecure";
 
 
 
@@ -19,14 +19,16 @@ const Aside = () => {
   const { user, logOut } = useContext(AuthContext);
   const [role, setRole] = useState('');
   // const { role } = useContext(AuthContext);
-console.log(role)
+  // console.log(role)
+    const axiosSecure = useAxiosSecure();
+  
   useEffect(() => {
-    axios.get(`http://localhost:5000/users/role/${user.email}`)
+    axiosSecure.get(`/users/role/${user.email}`)
       .then(res => {
 
         setRole(res.data.role);
       })
-  }, [user])
+  }, [user,axiosSecure])
 
   const handleLogOut = () => {
 
@@ -55,7 +57,7 @@ console.log(role)
         <nav className="flex-1 px-4 py-6 space-y-2">
 
           <NavLink
-            to="/dashboard/create-donation-request"
+            to="/dashboard"
             className={({ isActive }) =>
               `flex items-center gap-3 px-4 py-2 rounded-lg transition 
             ${isActive ? "bg-white text-[#B11226]" : "hover:bg-red-700"}`

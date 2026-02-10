@@ -42,16 +42,13 @@ const AllUsers = () => {
 
   return (
     <div>
+      <h2 className='text-4xl text-secondary text-center my-10'>Red Drop Users</h2>
       <div className="overflow-x-auto">
         <table className="table">
           {/* head */}
           <thead>
             <tr>
-              <th>
-                <label>
-                  <input type="checkbox" className="checkbox" />
-                </label>
-              </th>
+            <th></th>
               <th>Name</th>
               <th>Role</th>
               <th>User Status</th>
@@ -90,9 +87,9 @@ const AllUsers = () => {
                   <th>
                     <div className='flex gap-2 text-white'>
                       {
-
+// && user?.role === 'donor' 
                         user?.role !== 'admin' && (
-                          user?.status !== 'active' && user?.role === 'donor' ? (
+                          user?.status !== 'active' ? (
                             <button
                               onClick={() => handleStatus(user?.email, 'active')}
                               className="btn bg-green-400 btn-xs"

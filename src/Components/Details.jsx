@@ -1,21 +1,23 @@
-import axios from 'axios';
+
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
 
 import { Toaster, toast } from 'react-hot-toast';
 import { AuthContext } from '../Contexts/AuthContext';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 const Details = () => {
   const { id } = useParams();
 
   const { user } = useContext(AuthContext);
-
+  const axiosSecure = useAxiosSecure();
   const [request, setRequest] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`http://localhost:5000/my-donation-request/${id}`)
+ 
+    axiosSecure
+      .get(`/my-donation-request/${id}`)
       .then(res => {
         setRequest(res.data);
         setLoading(false);
@@ -24,9 +26,9 @@ const Details = () => {
         toast.error('Failed to load request');
         setLoading(false);
       });
-  }, [id]);
+  }, [id,axiosSecure]);
 
-  console.log(request);
+  // console.log(request);
   const handleDonate = e => {
     e.preventDefault();
     const form = e.target;
@@ -36,8 +38,8 @@ const Details = () => {
       name,
       email,
     };
-    axios
-      .patch(`http://localhost:5000/all-donation-request/${id}`, donorData)
+    axiosSecure
+      .patch(`/all-donation-request/${id}`, donorData)
       .then(res => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {

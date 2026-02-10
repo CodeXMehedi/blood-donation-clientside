@@ -18,6 +18,8 @@ import SearchDonor from "../Pages/SearchDonor/SearchDonor";
 import Funding from "../Pages/Funding/Funding";
 import FundingSuccess from "../Pages/Funding/FundingSuccess";
 import FundingCancelled from "../Pages/Funding/FundingCancelled";
+import EditDonationRequest from "../Pages/EditDonationRequest";
+import DashboardHome from "../Pages/Dashboard/DashboardHomePage/DashboardHome";
 
 
 
@@ -68,7 +70,7 @@ export const router = createBrowserRouter([
       },
       {
         path: 'funding/funding-cancelled',
-        Component:FundingCancelled
+        Component: FundingCancelled,
       },
     ],
   },
@@ -82,7 +84,7 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <DonorHomePage></DonorHomePage>,
+        element: <DashboardHome></DashboardHome>
       },
       {
         path: 'profile',
@@ -103,6 +105,10 @@ export const router = createBrowserRouter([
       {
         path: '/dashboard/all-donation-request',
         element: <AllDonationRequest></AllDonationRequest>,
+      },
+      {
+        path: '/dashboard/edit-request/:id',
+        element:<EditDonationRequest></EditDonationRequest>
       },
     ],
   },

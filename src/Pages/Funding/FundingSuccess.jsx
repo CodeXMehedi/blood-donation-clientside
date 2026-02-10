@@ -1,23 +1,25 @@
-import axios from 'axios';
+
 import React, { useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 
 const FundingSuccess = () => {
   const [searchParams] = useSearchParams();
   const sessionId = searchParams.get('session_id');
-  console.log(sessionId)
-
+  // console.log(sessionId)
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     if (sessionId) {
-      axios.post(`http://localhost:5000/funding?session_id=${sessionId}`)
+      axiosSecure
+        .post(`/funding?session_id=${sessionId}`)
         .then(res => {
-          console.log(res.data)
-        })
+          console.log(res.data);
+        });
       }
       
     
-  },[sessionId])
+  },[sessionId,axiosSecure])
 return (
      
     <div className="flex flex-col gap-10 justify-center items-center h-[80vh]">

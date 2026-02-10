@@ -2,6 +2,7 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 
 const SearchDonor = () => {
   const [upazilas, setUpazilas] = useState([]);
@@ -9,7 +10,7 @@ const SearchDonor = () => {
   const [district, setDistrict] = useState('');
   const [upazila, setUpazila] = useState('');
   const [searchParams, setSearchParams] = useState(null);
-
+  const axiosSecure = useAxiosSecure();
   useEffect(() => {
     axios.get('/Upazilas.json').then(res => {
       setUpazilas(res.data);
@@ -34,7 +35,7 @@ const SearchDonor = () => {
     queryKey: ['donorSearch', searchParams],
    enabled: !!searchParams,
     queryFn: async () => {
-      const res = await axios.get('http://localhost:5000/user', {
+      const res = await axiosSecure.get('/user', {
         params: searchParams,
       });
       return res.data;
