@@ -17,7 +17,7 @@ const Banner = () => {
       <h2 className="text-[#B11226] text-center font-semibold text-3xl my-4">
         Join the Blood Donation Movement
       </h2>
-      <div className="flex gap-4 justify-center my-16">
+      <div className="flex flex-col md:flex-row gap-4 justify-center my-16">
         <Link
           to="/register"
           className=" text-center bg-[#B11226] w-50 text-white text-lg p-2"

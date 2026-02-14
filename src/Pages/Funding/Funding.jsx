@@ -35,16 +35,16 @@ const Funding = () => {
       setFunding(res.data)
     });
   }, [axiosSecure])
-  console.log(funding)
+  // console.log(funding)
   return (
     <div className=" my-10">
       <h2 className="text-4xl text-primary text-center my-6 ">
         <span className='font-semibold'>Funding Overview</span> 
       </h2>
-      <div className="w-9/12  mx-auto fle flex justify-end">
+      <div className="w-9/12  mx-auto  flex justify-end">
         <div className=" w-6/12 ">
           <div className=" flex gap-2 items-center mb-4">
-            <legend className="fieldset-legend text-lg">Amount : </legend>
+            <legend className="fieldset-legend text-lg">Amount: </legend>
             <input
               type="text"
               className="input"

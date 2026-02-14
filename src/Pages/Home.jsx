@@ -7,8 +7,10 @@ const Home = () => {
   return (
     <div>
       <Banner></Banner>
-      <Featured></Featured>
-      <ContactUs></ContactUs>
+      <div className="bg-linear-to-br from-red-100 via-white to-red-100 ">
+        <Featured></Featured>
+        <ContactUs></ContactUs>
+      </div>
     </div>
   );
 };

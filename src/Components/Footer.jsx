@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaFacebookF, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
 
 const Footer = () => {
   return (
@@ -20,10 +21,10 @@ const Footer = () => {
         <div className="flex-1">
           <div className="flex flex-col h-full justify-center items-center gap-2">
             <a href="/">Home</a>
-            <a href="/donation-requests">Donation Requests</a>
-            <a href="/search">Search Donors</a>
-            <a href="/contact">Contact Us</a>
-            <a href="/privacy-policy">Privacy Policy</a>
+            <a href="/all-donation-request">Donation Requests</a>
+            <a href="/search-donors">Search Donors</a>
+            <a href="">Contact Us</a>
+            <a href="">Privacy Policy</a>
           </div>
         </div>
 
@@ -37,7 +38,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i className="fa-brands fa-x-twitter"></i>
+              <FaXTwitter className="hover:text-gray-300 transition" />
             </a>
 
             <a
@@ -45,7 +46,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i className="fa-brands fa-linkedin-in"></i>
+              <FaLinkedinIn className="hover:text-gray-300 transition" />
             </a>
 
             <a
@@ -53,7 +54,7 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <i className="fa-brands fa-facebook"></i>
+              <FaFacebookF className="hover:text-gray-300 transition" />
             </a>
           </div>
         </div>

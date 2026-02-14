@@ -99,6 +99,7 @@ const MyDonationRequests = () => {
                 <th>Donation time</th>
                 <th>Blood group </th>
                 <th>Status</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>

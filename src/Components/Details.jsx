@@ -39,7 +39,7 @@ const Details = () => {
       email,
     };
     axiosSecure
-      .patch(`/all-donation-request/${id}`, donorData)
+      .patch(`/all-donation-request/update/${id}`, donorData)
       .then(res => {
         console.log(res.data);
         if (res.data.modifiedCount > 0) {

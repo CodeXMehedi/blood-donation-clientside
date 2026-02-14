@@ -1,22 +1,30 @@
-import React, {  useEffect, useState } from 'react';
+import React, {  useContext, useEffect, useState } from 'react';
 import useAxiosSecure from '../../hooks/useAxiosSecure';
 import toast from 'react-hot-toast';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { Link } from 'react-router';
 
 const AllDonationRequest = () => {
-  // const { user } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [allRequest, setAllRequest] = useState([]);
    const [statusFilter, setStatusFilter] = useState('all');
    const axiosSecure = useAxiosSecure();
-   
-  useEffect(() => {
-    axiosSecure.get('/all-donation-request')
-          .then(res => {
-            setAllRequest(res.data);
-          })
-  },[axiosSecure])
+  const [userData, setUserData] = useState([]);
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const requestsRes = await axiosSecure.get('/all-donation-request');
+        const usersRes = await axiosSecure.get(`/users/by-email?email=${user?.email}`);
+          setAllRequest(requestsRes.data);
+        setUserData(usersRes.data);
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    fetchData();
+  },[axiosSecure])
+console.log(userData)
   const handleDoneCancel = async (id, status) => {
    
       try {
@@ -79,6 +87,7 @@ const AllDonationRequest = () => {
                   <th>Donation time</th>
                   <th>Blood group </th>
                   <th>Status</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -101,38 +110,44 @@ const AllDonationRequest = () => {
                       <td>{r.bloodGroup}</td>
                       <td>{r.donationStatus}</td>
                       <td className="flex gap-2">
-                        {r.donationStatus == 'Inprogress' && (
-                          <Link
-                            onClick={() => {
-                              handleDoneCancel(r._id, 'Done');
-                            }}
-                            className="btn btn-sm bg-green-400 text-white"
-                          >
-                            Done
-                          </Link>
+                        {(userData.role === 'admin' || userData.role === 'volunteer') &&
+                          r.donationStatus == 'Inprogress' && (
+                            <Link
+                              onClick={() => {
+                                handleDoneCancel(r._id, 'Done');
+                              }}
+                              className="btn btn-sm bg-green-400 text-white"
+                            >
+                              Done
+                            </Link>
+                          )}
+                        {(userData.role === 'admin' || userData.role === 'volunteer') &&
+                          r.donationStatus == 'Inprogress' && (
+                            <Link
+                              onClick={() => {
+                                handleDoneCancel(r._id, 'Cancelled');
+                              }}
+                              className="btn btn-sm bg-error text-white"
+                            >
+                              Cancel
+                            </Link>
+                          )}
+                        {userData.role === 'admin' && (
+                          <>
+                            <button
+                              onClick={() => handleDelete(r._id)}
+                              className="btn btn-sm bg-secondary text-white"
+                            >
+                              Delete
+                            </button>
+                            <Link
+                              to={`/dashboard/edit-request/${r._id}`}
+                              className="btn btn-sm bg-sky-500 text-white"
+                            >
+                              Edit
+                            </Link>
+                          </>
                         )}
-                        {r.donationStatus == 'Inprogress' && (
-                          <Link
-                            onClick={() => {
-                              handleDoneCancel(r._id, 'Cancelled');
-                            }}
-                            className="btn btn-sm bg-error text-white"
-                          >
-                            Cancel
-                          </Link>
-                        )}
-                        <button
-                          onClick={() => handleDelete(r._id)}
-                          className="btn btn-sm bg-secondary text-white"
-                        >
-                          Delete
-                        </button>
-                        <Link
-                          to={`/dashboard/edit-request/${r._id}`}
-                          className="btn btn-sm bg-sky-500 text-white"
-                        >
-                          Edit
-                        </Link>
                       </td>
                     </tr>
                   ))}
