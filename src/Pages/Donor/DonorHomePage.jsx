@@ -21,7 +21,7 @@ const DonorHomePage = () => {
       .catch(err => {
         console.log(err);
       });
-  }, [user?.email]);
+  }, [user?.email,axiosSecure]);
 
   if (loading) {
     return <p className="text-center mt-10">Loading...</p>;
@@ -74,10 +74,10 @@ const DonorHomePage = () => {
           </h1>
         </div>
 
-        <h3 className="text-xl font-semibold mb-4">
+        {!myRequest.length == 0 && <h3 className="text-xl font-semibold mb-4">
           My Recent donation requests{' '}
-        </h3>
-        <div className="overflow-x-auto">
+        </h3>}
+        {!myRequest.length==0 && <div className="overflow-x-auto">
           <table className="table table-xs">
             <thead>
               <tr>
@@ -92,7 +92,7 @@ const DonorHomePage = () => {
             </thead>
             <tbody>
               {myRequest
-                .filter(r => r.donationStatus == 'Inprogress' || r.donationStatus=='Done' || r.donationStatus=='Cancelled')
+                // .filter(r => r.donationStatus == 'Inprogress' || r.donationStatus == 'Done' || r.donationStatus == 'Cancelled')
                 .map(r => (
                   <tr key={r._id}>
                     <td>{r.requesterName}</td>
@@ -107,7 +107,7 @@ const DonorHomePage = () => {
                       {r.donationStatus == 'Inprogress' && (
                         <Link
                           onClick={() => {
-                           handleDoneCancel(r._id,'Done');
+                            handleDoneCancel(r._id, 'Done');
                           }}
                           className="btn btn-sm bg-green-400 text-white"
                         >
@@ -124,7 +124,7 @@ const DonorHomePage = () => {
                           Cancel
                         </Link>
                       )}
-                      <button onClick={()=>handleDelete(r._id)} className='btn btn-sm bg-secondary text-white'>Delete</button>
+                      <button onClick={() => handleDelete(r._id)} className='btn btn-sm bg-secondary text-white'>Delete</button>
                       <Link to={`/dashboard/edit-request/${r._id}`} className='btn btn-sm bg-sky-500 text-white'>Edit</Link>
                       
                     </td>
@@ -132,13 +132,13 @@ const DonorHomePage = () => {
                 ))}
             </tbody>
           </table>
-        </div>
-        <Link
+        </div>}
+        {!myRequest.length == 0 && <Link
           to="/dashboard/my-donation-requests"
           className=" text-center bg-[#B11226] w-50 text-white text-lg p-2 mt-6"
         >
           View my all request
-        </Link>
+        </Link>}
       </div>
     </div>
   );
