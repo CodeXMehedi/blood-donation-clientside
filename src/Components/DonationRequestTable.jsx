@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 const DonationRequestTable = ({ allRequest }) => {
   return (
-    <div className="hidden md:block   mb-6">
+    <div className="hidden lg:block   mb-6">
       <div className="overflow-x-auto  ">
         <table className="table ">
           <thead className="text-lg text-gray-700">

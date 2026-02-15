@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react';
 
 import { AuthContext } from '../../Contexts/AuthContext';
-import { axiosInstance } from '../../hooks/axiosIns';
+// import { axiosInstance } from '../../hooks/axiosIns';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
 // import useAxiosSecure from '../../hooks/useAxiosSecure'
 
 
@@ -10,14 +11,15 @@ const AllUsers = () => {
   const [users, setUsers] = useState([]);
   const { user } = useContext(AuthContext);
   
-
+  const axiosSecure = useAxiosSecure();
   const fetchUsers = () => {
-    axiosInstance.get('/users')
+    axiosSecure
+      .get('/users')
       // axiosSecure.get('/users')
 
       .then(res => {
         setUsers(res.data);
-      })
+      });
   }
   useEffect(() => {
     fetchUsers();
@@ -25,19 +27,21 @@ const AllUsers = () => {
   }, [user]);
 
   const handleStatus = (email, status) => {
-    axiosInstance.patch(`/user/update/status?email=${email}&status=${status}`)
+    axiosSecure
+      .patch(`/user/update/status?email=${email}&status=${status}`)
       .then(res => {
         console.log(res.data);
         fetchUsers();
-      })
+      });
   }
 
   const handleRole = (email, role) => {
-    axiosInstance.patch(`/user/update/role?email=${email}&role=${role}`)
+    axiosSecure
+      .patch(`/user/update/role?email=${email}&role=${role}`)
       .then(res => {
         console.log(res.data);
         fetchUsers();
-      })
+      });
   }
 
   return (

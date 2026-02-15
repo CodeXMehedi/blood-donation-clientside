@@ -45,7 +45,7 @@ console.log(totalUsers,totalFunding,totalRequests)
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mt-6">
           {/* Card 1 */}
-          <div className="bg-red-300 shadow-xl rounded-lg p-12 flex items-center gap-4">
+          <div className="bg-secondary shadow-xl rounded-lg p-12 flex items-center gap-4">
             <div className="bg-blue-100 text-blue-600 p-6 rounded-full text-2xl">
               👤
             </div>
@@ -56,7 +56,7 @@ console.log(totalUsers,totalFunding,totalRequests)
           </div>
 
           {/* Card 2 */}
-          <div className="bg-red-300 shadow-xl rounded-lg p-12 flex items-center gap-4">
+          <div className="bg-secondary shadow-xl rounded-lg p-12 flex items-center gap-4">
             <div className="bg-green-100 text-green-600 p-6 rounded-full text-2xl">
               💰
             </div>
@@ -67,7 +67,7 @@ console.log(totalUsers,totalFunding,totalRequests)
           </div>
 
           {/* Card 3 */}
-          <div className="bg-red-300 shadow-xl rounded-lg p-12 flex items-center gap-4">
+          <div className="bg-secondary shadow-xl rounded-lg p-12 flex items-center gap-4">
             <div className="bg-red-100 text-red-600 p-6 rounded-full text-2xl">
               🩸
             </div>

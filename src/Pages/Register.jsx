@@ -1,12 +1,13 @@
 import { NavLink,  useNavigate } from 'react-router';
 import { AuthContext } from '../Contexts/AuthContext';
-import { use, useEffect, useState } from 'react';
+import {  useContext, useEffect, useState } from 'react';
 import { GoogleAuthProvider } from 'firebase/auth';
 import { Eye, EyeClosed } from 'lucide-react';
-import toast from 'react-hot-toast';
+
 import DocumentMeta from 'react-document-meta';
 import axios from 'axios';
-import useAxios from '../hooks/useAxios';
+import toast from 'react-hot-toast';
+import useAxiosSecure from '../hooks/useAxiosSecure';
 
 
 
@@ -24,7 +25,7 @@ const Register = () => {
     }
   };
 
-  const { createUser, setUser, updateUser } = use(AuthContext);
+  const { createUser, setUser, updateUser } = useContext(AuthContext);
   const [error, setError] = useState('');
   const [passwordError, setPasswordError] = useState('');
   const [confirmPasswordError, setConfirmPasswordError] = useState('');
@@ -37,7 +38,7 @@ const Register = () => {
   const [districts, setDistricts] = useState([]);
   const [district, setDistrict] = useState('');
   const [upazila, setUpazila] = useState('');
-  const axiosInstance = useAxios();
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     axios.get('/Upazilas.json').then(res => {
@@ -109,34 +110,38 @@ const Register = () => {
 
     if (response.data.success == true) {
 
-      createUser(email, password).then((result) => {
-        const user = result.user;
+      createUser(email, trimmedPassword)
+        .then(result => {
+          const user = result.user;
 
-        updateUser({ displayName: name, photoURL: imageUrl })
-          .then(() => {
+          updateUser({ displayName: name, photoURL: imageUrl })
+            .then(() => {
+              setUser({ ...user, displayName: name, photoURL: imageUrl });
 
-            setUser({ ...user, displayName: name, photoURL: imageUrl });
-
-            //store data in the database
-            axiosInstance.post('/users', formData).then(res => {
-              console.log(res.data);
-            }).catch(err => {
-              console.log(err);
+              //store data in the database
+              axiosSecure
+                .post('/users', formData)
+                .then(res => {
+                  console.log(res.data);
+                })
+                .catch(err => {
+                  console.log(err);
+                });
+              toast.success('Register Successful !!!');
+              navigate('/');
             })
-            toast.success("Register Successful");
-            navigate("/");
-          })
-          .catch((error) => {
-            console.log(error);
-            setUser(user);
-          });
-      }).catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        if (errorCode && errorMessage) {
-          toast.error(errorMessage, errorCode);
-        }
-      });
+            .catch(error => {
+              console.log(error);
+              setUser(user);
+            });
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          if (errorCode && errorMessage) {
+            toast.error(errorMessage, errorCode);
+          }
+        });
     }
   }
 
@@ -164,7 +169,7 @@ const Register = () => {
               <input name='email' type="email" className="input" placeholder="Email" required />
 
               <label className="label">Select Blood Group</label>
-              <select className='select' name="bloodGroup" defaultValue='Select Blood Group' id="select">
+              <select className='select' name="bloodGroup" defaultValue='Select Blood Group' id="select" required>
                 <option disabled={true}>Select Blood Group</option>
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
@@ -179,7 +184,7 @@ const Register = () => {
 
               <label className="label">Select your Upazila</label>
 
-              <select value={upazila} onChange={(e) => setUpazila(e.target.value)} className='select'>
+              <select value={upazila} onChange={(e) => setUpazila(e.target.value)} className='select' required>
                 <option disabled  value=''>Select your Upazila</option>
                 {
                   upazilas.map(u => <option value={u?.name} key={u.id}>{u?.name}</option>)
@@ -188,7 +193,7 @@ const Register = () => {
 
               <label className="label">Select your district</label>
 
-              <select value={district} onChange={(e)=>setDistrict(e.target.value)} className='select'>
+              <select value={district} onChange={(e)=>setDistrict(e.target.value)} className='select' required>
                 <option disabled  value="">Select your district</option>
                 {
                   districts.map(d => <option value={d?.name} key={d.id}>{ d?.name}</option>)

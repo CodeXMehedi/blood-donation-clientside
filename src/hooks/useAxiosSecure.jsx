@@ -4,7 +4,7 @@ import { AuthContext } from '../Contexts/AuthContext';
 import { useNavigate } from 'react-router';
 
 const axiosSecure = axios.create({
-  baseURL: 'http://localhost:5000',
+  baseURL: 'https://blood-donation-server-weld.vercel.app',
 });
 const useAxiosSecure = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -43,4 +43,3 @@ const useAxiosSecure = () => {
 };
 
 export default useAxiosSecure;
-

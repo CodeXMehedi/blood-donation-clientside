@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 const DonationRequestCard = ({allRequest}) => {
   return (
-    <div className="md:hidden space-y-5">
+    <div className="lg:hidden space-y-5">
       {allRequest.map(r => (
         <div key={r._id} className="bg-white shadow-md rounded-lg p-4 border border-primary">
           <h3 className="text-lg font-semibold">{r.requesterName}</h3>
