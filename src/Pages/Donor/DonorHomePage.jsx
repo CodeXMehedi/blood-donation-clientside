@@ -65,80 +65,95 @@ const DonorHomePage = () => {
     <div className="flex min-h-screen justify-center items-center">
       <div className="flex flex-col justify-center items-center">
         <div>
-          <h1 className="text-4xl font-semibold text-[#8A0303] mb-8">
+          <h1 className="font-bold md:text-4xl text-2xl text-[#8A0303] mb-8">
             Welcome ! {user?.displayName} <br />{' '}
-            <p className="mt-4 text-center  text-xl text-[#B11226]">
+            <p className="mt-4 text-center  text-lg text-[#B11226]">
               Your donation has the power to give someone a second chance at
               life.
             </p>
           </h1>
         </div>
 
-        {!myRequest.length == 0 && <h3 className="text-xl font-semibold mb-4">
-          My Recent donation requests{' '}
-        </h3>}
-        {!myRequest.length==0 && <div className="overflow-x-auto">
-          <table className="table table-xs">
-            <thead>
-              <tr>
-                <th>Recipient Name</th>
-                <th>Recipient location</th>
-                <th>Donation date</th>
-                <th>Donation time</th>
-                <th>Blood group </th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {myRequest
-                // .filter(r => r.donationStatus == 'Inprogress' || r.donationStatus == 'Done' || r.donationStatus == 'Cancelled')
-                .map(r => (
-                  <tr key={r._id}>
-                    <td>{r.requesterName}</td>
-                    <td>
-                      {r.upazila},{r.district}
-                    </td>
-                    <td>{r.donationDate}</td>
-                    <td>{r.donationTime}</td>
-                    <td>{r.bloodGroup}</td>
-                    <td>{r.donationStatus}</td>
-                    <td className="flex gap-2">
-                      {r.donationStatus == 'Inprogress' && (
-                        <Link
-                          onClick={() => {
-                            handleDoneCancel(r._id, 'Done');
-                          }}
-                          className="btn btn-sm bg-green-400 text-white"
+        {!myRequest.length == 0 && (
+          <h3 className="text-xl font-semibold mb-4">
+            My Recent donation requests{' '}
+          </h3>
+        )}
+        {!myRequest.length == 0 && (
+          <div className="overflow-x-auto">
+            <table className="table table-xs">
+              <thead>
+                <tr>
+                  <th>Recipient Name</th>
+                  <th>Recipient location</th>
+                  <th>Donation date</th>
+                  <th>Donation time</th>
+                  <th>Blood group </th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {myRequest
+                  // .filter(r => r.donationStatus == 'Inprogress' || r.donationStatus == 'Done' || r.donationStatus == 'Cancelled')
+                  .map(r => (
+                    <tr key={r._id}>
+                      <td>{r.requesterName}</td>
+                      <td>
+                        {r.upazila},{r.district}
+                      </td>
+                      <td>{r.donationDate}</td>
+                      <td>{r.donationTime}</td>
+                      <td>{r.bloodGroup}</td>
+                      <td>{r.donationStatus}</td>
+                      <td className="flex gap-2">
+                        {r.donationStatus == 'Inprogress' && (
+                          <Link
+                            onClick={() => {
+                              handleDoneCancel(r._id, 'Done');
+                            }}
+                            className="btn btn-sm bg-green-400 text-white"
+                          >
+                            Done
+                          </Link>
+                        )}
+                        {r.donationStatus == 'Inprogress' && (
+                          <Link
+                            onClick={() => {
+                              handleDoneCancel(r._id, 'Cancelled');
+                            }}
+                            className="btn btn-sm bg-error text-white"
+                          >
+                            Cancel
+                          </Link>
+                        )}
+                        <button
+                          onClick={() => handleDelete(r._id)}
+                          className="btn btn-sm bg-secondary text-white"
                         >
-                          Done
-                        </Link>
-                      )}
-                      {r.donationStatus == 'Inprogress' && (
+                          Delete
+                        </button>
                         <Link
-                          onClick={() => {
-                            handleDoneCancel(r._id, 'Cancelled');
-                          }}
-                          className="btn btn-sm bg-error text-white"
+                          to={`/dashboard/edit-request/${r._id}`}
+                          className="btn btn-sm bg-sky-500 text-white"
                         >
-                          Cancel
+                          Edit
                         </Link>
-                      )}
-                      <button onClick={() => handleDelete(r._id)} className='btn btn-sm bg-secondary text-white'>Delete</button>
-                      <Link to={`/dashboard/edit-request/${r._id}`} className='btn btn-sm bg-sky-500 text-white'>Edit</Link>
-                      
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
-        </div>}
-        {!myRequest.length == 0 && <Link
-          to="/dashboard/my-donation-requests"
-          className=" text-center bg-[#B11226] w-50 text-white text-lg p-2 mt-6"
-        >
-          View my all request
-        </Link>}
+                      </td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+        {!myRequest.length == 0 && (
+          <Link
+            to="/dashboard/my-donation-requests"
+            className=" text-center bg-[#B11226] w-50 text-white text-lg p-2 mt-6"
+          >
+            View my all request
+          </Link>
+        )}
       </div>
     </div>
   );

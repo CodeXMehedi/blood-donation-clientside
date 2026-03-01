@@ -58,16 +58,18 @@ const SearchDonor = () => {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-2 items-center justify-center w-10/12  mx-auto my-20 ">
       <form onSubmit={handleSubmit(handleSearch)} className="flex-1 mr-20 ml-4">
-        <fieldset className="fieldset ">
-          <label className="label">Select Blood Group</label>
+        <fieldset className="fieldset text-lg  ">
+          <label className="label dark:text-white">Select Blood Group</label>
           <select
             className="select w-full"
             name="bloodGroup"
-            defaultValue="Select Blood Group"
+            defaultValue=""
             id="select"
             {...register('bloodGroup', { required: true })}
           >
-            <option disabled={true}>Select Blood Group</option>
+            <option value="" disabled>
+              Select Blood Group
+            </option>
             <option value="A+">A+</option>
             <option value="A-">A-</option>
             <option value="B+">B+</option>
@@ -78,10 +80,10 @@ const SearchDonor = () => {
             <option value="AB-">AB-</option>
           </select>
           {errors.bloodGroup?.type === 'required' && (
-            <p className="text-red-600">Name is Required</p>
+            <p className="text-red-600">Blood Group</p>
           )}
 
-          <label className="label">Select your Upazila</label>
+          <label className="label dark:text-white">Select your Upazila</label>
 
           <select
             value={upazila}
@@ -102,7 +104,7 @@ const SearchDonor = () => {
             <p className="text-red-600">Select Your Upazila</p>
           )}
 
-          <label className="label">Select your district</label>
+          <label className="label dark:text-white">Select your district</label>
 
           <select
             value={district}
@@ -123,16 +125,21 @@ const SearchDonor = () => {
             <p className="text-red-600">Select Your District</p>
           )}
 
-          <button className="btn btn-secondary mt-4">Search</button>
+          <button className="btn bg-[#b11226] text-lg mt-4">Search</button>
         </fieldset>
       </form>
       <div className="flex-1 flex justify-center items-center">
-        {searchParams && donors.length === 0 && <p className='text-4xl'>No Donors Found.</p>}
+        {searchParams && donors.length === 0 && (
+          <p className="text-4xl">No Donors Found.</p>
+        )}
 
         {donors.length > 0 && (
-          <div className='grid grid-cols-1 lg:grid-cols-2 gap-2'>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
             {donors.map(donor => (
-              <div key={donor._id} className="p-4 border-2 border-red-400 rounded mb-3 text-lg">
+              <div
+                key={donor._id}
+                className="p-4 border-2 border-red-400 rounded mb-3 text-lg"
+              >
                 <h3 className="font-bold">{donor.name}</h3>
                 <p>Blood Group: {donor.bloodGroup}</p>
                 <p>

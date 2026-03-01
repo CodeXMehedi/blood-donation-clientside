@@ -1,15 +1,23 @@
 import React from 'react';
 import { FaFacebookF, FaLinkedinIn, FaXTwitter } from 'react-icons/fa6';
-
+import bloodDonationLogo from '../assets/bloodlogo.jpg'
+import { Link } from 'react-router';
 const Footer = () => {
   return (
-    <div className="bg-primary text-white">
+    <div className="bg-[#8a0303] dark:bg-[bg-[#8a0303]] text-white text-lg">
       <div className="flex flex-col lg:flex-row gap-10 p-10 lg:p-20">
         <div className="flex-1 lg:ml-16 text-center lg:text-left">
           <div className="flex items-center justify-center lg:justify-start gap-2">
-            <p className="text-3xl font-bold">Red Drop</p>
+            <Link to="/" className="flex items-center gap-2 text-2xl font-bold">
+              <img
+                className="w-10 h-10 rounded"
+                src={bloodDonationLogo}
+                alt=""
+              />
+              Red Drop
+            </Link>
           </div>
-          <p className="mt-6 text-sm">
+          <p className="mt-6 ">
             BloodCare is a voluntary blood donation platform connecting donors
             with patients in need. One donation can save multiple lives.
           </p>
@@ -23,8 +31,8 @@ const Footer = () => {
             <a href="/">Home</a>
             <a href="/all-donation-request">Donation Requests</a>
             <a href="/search-donors">Search Donors</a>
-            <a href="">Contact Us</a>
-            <a href="">Privacy Policy</a>
+
+            <a href="/privacy-policy">Privacy Policy</a>
           </div>
         </div>
 

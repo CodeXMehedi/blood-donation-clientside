@@ -4,7 +4,7 @@ import Home from "../Pages/Home";
 import Register from "../Pages/Register";
 import Login from "../Pages/Login";
 import DashboardLayout from "../DashboardLayout.jsx/DashboardLayout";
-import MainDashboard from "../Pages/Dashboard/MainDashboard";
+
 import Profile from "../Pages/Dashboard/Profile";
 import DonorHomePage from "../Pages/Donor/DonorHomePage";
 import CreateDonationRequest from "../Pages/Dashboard/CreateDonationRequest";
@@ -20,6 +20,7 @@ import FundingSuccess from "../Pages/Funding/FundingSuccess";
 import FundingCancelled from "../Pages/Funding/FundingCancelled";
 import EditDonationRequest from "../Pages/EditDonationRequest";
 import DashboardHome from "../Pages/Dashboard/DashboardHomePage/DashboardHome";
+import PrivacyPolicy from "../Pages/PrivacyPolicy";
 
 
 
@@ -72,6 +73,7 @@ export const router = createBrowserRouter([
         path: 'funding/funding-cancelled',
         Component: FundingCancelled,
       },
+
     ],
   },
   {
@@ -112,4 +114,8 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/privacy-policy',
+    Component:PrivacyPolicy
+  }
 ]);

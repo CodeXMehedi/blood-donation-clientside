@@ -1,5 +1,4 @@
-
-import { NavLink } from "react-router";
+import { Link, NavLink } from 'react-router';
 import {
   LayoutDashboard,
   Users,
@@ -11,56 +10,67 @@ import {
   X,
   MenuIcon,
 } from 'lucide-react';
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../../Contexts/AuthContext";
-import toast from "react-hot-toast";
-import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { CgProfile } from "react-icons/cg";
-
-
-
+import { useContext, useEffect, useState } from 'react';
+import { AuthContext } from '../../Contexts/AuthContext';
+import toast from 'react-hot-toast';
+import useAxiosSecure from '../../hooks/useAxiosSecure';
+import { CgProfile } from 'react-icons/cg';
+import bloodDonationLogo from '../../assets/bloodlogo.jpg';
 const Aside = () => {
   const { user, logOut } = useContext(AuthContext);
   const [role, setRole] = useState('');
   // const { role } = useContext(AuthContext);
   // console.log(role)
-    const axiosSecure = useAxiosSecure();
-   const [open, setOpen] = useState(false);
+  const axiosSecure = useAxiosSecure();
+  const [open, setOpen] = useState(false);
   useEffect(() => {
-    axiosSecure.get(`/users/role/${user.email}`)
-      .then(res => {
-
-        setRole(res.data.role);
-      })
-  }, [user,axiosSecure])
+    axiosSecure.get(`/users/role/${user.email}`).then(res => {
+      setRole(res.data.role);
+    });
+  }, [user, axiosSecure]);
 
   const handleLogOut = () => {
-
     logOut()
       .then(() => {
-        toast.success("Logged Out successful");
+        toast.success('Logged Out successful');
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error);
       });
   };
 
-
   return (
     <>
       <div className="" onClick={() => setOpen(!open)}>
-        <div className= "fixed z-50 left-6 top-2">
+        <div className="fixed z-50 left-6 top-2">
           {open ? (
-            <X className="md:hidden text-black"></X>
+            <X className="md:hidden text-black dark:text-white my-2 w-10 h-10"></X>
           ) : (
-            <MenuIcon className="md:hidden text-black"></MenuIcon>
+            <MenuIcon className="md:hidden text-black dark:text-white my-2 w-10 h-10"></MenuIcon>
           )}
         </div>
+        {open && (
+          <div
+            onClick={() => setOpen(false)}
+            className="fixed inset-0  z-30 md:hidden"
+          ></div>
+        )}
         <ul
-          className={`md:hidden  z-40 fixed opacity-60  ${open ? 'left-0' : '-left-full'}   duration-1000 text-black`}
+          className={`md:hidden    z-40 fixed opacity-60  ${open ? 'left-0' : '-left-full'}   duration-1000 text-black`}
         >
-          <aside className="w-64 flex min-h-screen  bg-[#B11226] text-white md:hidden  flex-col">
-            <div className="p-6 mt-4 text-2xl font-bold ">Red Blood</div>
+          <aside className="w-64  flex min-h-screen bg-[#B11226]  text-white md:hidden   flex-col">
+            <Link
+              to="/"
+              className="flex items-center gap-2 cursor-pointer p-6 mt-10 text-2xl font-bold  "
+            >
+              <img
+                className="w-10 h-10 rounded"
+                src={bloodDonationLogo}
+                alt=""
+              />
+              Red Drop
+            </Link>
+
             <div className="border-b    border-red-300 text-xl">
               <NavLink
                 to={'/dashboard/profile'}
@@ -70,12 +80,12 @@ const Aside = () => {
                 }
               >
                 <CgProfile />
-                Profile
+                <span className="text-lg"> Profile</span>
               </NavLink>
             </div>
 
             {/* Menu */}
-            <nav className="flex-1 px-4 py-6 space-y-2">
+            <nav className="flex-1 px-4 py-6 space-y-2 text-lg">
               <NavLink
                 to="/dashboard"
                 className={({ isActive }) =>
@@ -153,7 +163,16 @@ const Aside = () => {
       </div>
 
       <aside className="w-64 hidden  min-h-screen bg-[#B11226] text-white md:flex flex-col">
-        <div className="p-6 text-2xl font-bold ">Red Blood</div>
+        <Link
+          to="/"
+          className="   
+          flex items-center gap-2           
+             cursor-pointer m-6 
+              text-2xl font-bold hover:border hover:border-white transition duration-300 "
+        >
+          <img className="w-10 h-10 rounded" src={bloodDonationLogo} alt="" />
+          RED DROP
+        </Link>
         <div className="border-b    border-red-300 text-xl">
           <NavLink
             to={'/dashboard/profile'}

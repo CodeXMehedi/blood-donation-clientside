@@ -68,14 +68,15 @@ const Details = () => {
 
   return (
     <>
-      <div className="max-w-9/12 mx-auto bg-white shadow-lg rounded-lg p-8 my-20">
-        <h2 className="text-3xl font-bold text-center text-primary mb-6">
+      <div className="max-w-9/12 mx-auto shadow-lg rounded-lg p-8 my-20">
+        <h2 className="md:text-4xl text-2xl font-bold mt-2 text-center mb-6 text-[#8a0303]">
           Blood Donation Request Details
         </h2>
 
         <div className="space-y-2">
           <p>
-            <b className='text-secondary'>Recipient Name:</b> {request.recipientName}
+            <b className="text-secondary">Recipient Name:</b>{' '}
+            {request.recipientName}
           </p>
           <p>
             <b>Blood Group:</b> {request.bloodGroup}
@@ -112,7 +113,7 @@ const Details = () => {
               onClick={() =>
                 document.getElementById('donate_modal').showModal()
               }
-              className="btn btn-secondary  py-6 px-20 "
+              className="btn bg-[#b11226] rounded text-lg text-white  py-6 px-20 "
             >
               Donate Blood
             </button>

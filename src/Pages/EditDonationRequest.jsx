@@ -77,18 +77,18 @@ const EditDonationRequest = () => {
 
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white rounded-xl shadow-xl my-4">
-      <h2 className="bg-[#B11226] p-4 text-center font-semibold text-2xl mb-4 text-white ">
-        Create Donation Request
+    <div className="max-w-xl mx-auto p-4 bg-white rounded shadow-xl my-4">
+      <h2 className="bg-[#8a0303] p-4 text-center font-semibold text-2xl mb-4 text-white rounded">
+        Edit Donation Request
       </h2>
 
-      <form onSubmit={handleRequest} className="space-y-4">
+      <form onSubmit={handleRequest} className="space-y-4 text-gray-600">
         <label className="label">Requester Name</label>
         <input
           type="text"
           value={user?.requesterName}
           readOnly
-          className="input input-bordered w-full"
+          className="input input-bordered dark:bg-gray-300 w-full"
         />
 
         <label className="label mt-2">Requester Email</label>
@@ -96,7 +96,7 @@ const EditDonationRequest = () => {
           type="email"
           value={user?.requesterEmail}
           readOnly
-          className="input input-bordered w-full"
+          className="input input-bordered dark:bg-gray-300 w-full"
         />
 
         <label className="label mt-2">Recipient Name</label>
@@ -111,17 +111,19 @@ const EditDonationRequest = () => {
             }))
           }
           autoComplete="name"
-          className="input input-bordered w-full"
+          required
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <div className="flex items-center gap-4 my-2">
           <label className="label mt-2">Recipient District</label>
           <select
             value={user?.district || ''}
+            required
             onChange={e =>
               setUser(prevUser => ({ ...prevUser, district: e.target.value }))
             }
-            className="select w-full"
+            className="select dark:bg-gray-300 w-full"
           >
             <option disabled value="">
               Select your district
@@ -134,13 +136,14 @@ const EditDonationRequest = () => {
           </select>
         </div>
 
-        <div className="flex items-center gap-4 my-2">
+        <div className="flex  items-center gap-4 my-2">
           <select
             value={user?.upazila || ''}
+            required
             onChange={e =>
               setUser(prevUser => ({ ...prevUser, upazila: e.target.value }))
             }
-            className="select w-full"
+            className="select dark:bg-gray-300 w-full"
           >
             <option disabled value="">
               Select your Upazila
@@ -157,12 +160,13 @@ const EditDonationRequest = () => {
         <input
           type="text"
           name="hospitalName"
+          required
           value={user?.hospitalName || ''}
           onChange={e =>
             setUser(prevUser => ({ ...prevUser, hospitalName: e.target.value }))
           }
           placeholder="Dhaka Medical College Hospital"
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
           autoComplete="organization"
         />
 
@@ -175,18 +179,20 @@ const EditDonationRequest = () => {
             setUser(prev => ({ ...prev, address: e.target.value }))
           }
           placeholder="Zahir Raihan Rd, Dhaka"
-          className="input input-bordered w-full"
+          required
+          className="input dark:bg-gray-300 input-bordered w-full"
           autoComplete="street-address"
         />
 
         <label className="label mt-2">Blood Group</label>
         <select
           name="bloodGroup"
+          required
           value={user?.bloodGroup || ''}
           onChange={e =>
             setUser(prev => ({ ...prev, bloodGroup: e.target.value }))
           }
-          className="select select-bordered w-full"
+          className="select dark:bg-gray-300 select-bordered w-full"
         >
           <option disabled value="">
             Select Blood Group
@@ -205,38 +211,41 @@ const EditDonationRequest = () => {
         <input
           type="date"
           name="donationDate"
+          required
           value={user?.donationDate || ''}
           onChange={e =>
             setUser(prev => ({ ...prev, donationDate: e.target.value }))
           }
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Donation Time</label>
         <input
           type="time"
           name="donationTime"
+          required
           value={user?.donationTime || ''}
           onChange={e =>
             setUser(prev => ({ ...prev, donationTime: e.target.value }))
           }
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Request Message</label>
         <textarea
           name="message"
+          required
           value={user?.message || ''}
           onChange={e =>
             setUser(prev => ({ ...prev, message: e.target.value }))
           }
-          className="textarea textarea-bordered w-full"
+          className="textarea dark:bg-gray-300 textarea-bordered w-full"
           placeholder="Please explain in detail why the blood is needed."
         ></textarea>
 
         <button
           type="submit"
-          className="w-full mt-4 bg-[#B11226] text-white text-lg p-3"
+          className="w-full mt-4 rounded bg-[#B11226] text-white text-lg p-3"
         >
           Edit Request
         </button>

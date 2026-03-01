@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 const DonationRequestTable = ({ allRequest }) => {
+
   return (
     <div className="hidden lg:block   mb-6">
       <div className="overflow-x-auto  ">
@@ -29,7 +30,7 @@ const DonationRequestTable = ({ allRequest }) => {
                 <td>
                   <Link
                     to={`/all-donation-request/details/${r?._id}`}
-                    className="bg-[#B11226] w-40  p-2 text-white"
+                    className="bg-[#B11226] w-40  p-2 text-white rounded"
                   >
                     View Details
                   </Link>

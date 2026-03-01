@@ -93,17 +93,17 @@ const CreateDonationRequest = () => {
   }
 
   return (
-    <div className="max-w-xl mx-auto p-4 bg-white rounded-xl shadow-xl my-4">
-      <h2 className="bg-[#B11226] p-4 text-center font-semibold text-2xl mb-4 text-white ">
+    <div className="max-w-xl mx-auto p-4 bg-white rounded shadow-xl my-4">
+      <h2 className="bg-[#8a0303] p-4 text-center font-bold  md:text-4xl text-2xl mb-4 text-white rounded ">
         Create Donation Request
       </h2>
-      <form onSubmit={handleRequest} className="space-y-4">
+      <form onSubmit={handleRequest} className="space-y-4 text-gray-600">
         <label className="label">Requester Name</label>
         <input
           type="text"
           value={user?.displayName}
           readOnly
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Requester Email</label>
@@ -111,7 +111,7 @@ const CreateDonationRequest = () => {
           type="email"
           value={user?.email}
           readOnly
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Recipient Name</label>
@@ -120,48 +120,77 @@ const CreateDonationRequest = () => {
           name="recipientName"
           // onChange={handleChange}
           required
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <div className="flex items-center gap-4 my-2">
           <label className="label mt-2">Recipient District</label>
-          <select value={district} onChange={(e) => setDistrict(e.target.value)} className='select'>
-            <option disabled value="">Select your district</option>
-            {
-              districts.map(d => <option value={d?.name} key={d.id}>{d?.name}</option>)
-            }
+          <select
+            value={district}
+            required
+            onChange={e => setDistrict(e.target.value)}
+            className="select dark:bg-gray-300"
+          >
+            <option disabled value="">
+              Select your district
+            </option>
+            {districts.map(d => (
+              <option value={d?.name} key={d.id}>
+                {d?.name}
+              </option>
+            ))}
           </select>
         </div>
 
         <div className="flex items-center gap-4 my-2">
           <label className="label mt-2">Recipient Upazila</label>
-          <select value={upazila} onChange={(e) => setUpazila(e.target.value)} className='select'>
-            <option disabled value=''>Select your Upazila</option>
-            {
-              upazilas.map(u => <option value={u?.name} key={u.id}>{u?.name}</option>)
-            }
+          <select
+            value={upazila}
+            required
+            onChange={e => setUpazila(e.target.value)}
+            className="select dark:bg-gray-300"
+          >
+            <option disabled value="">
+              Select your Upazila
+            </option>
+            {upazilas.map(u => (
+              <option value={u?.name} key={u.id}>
+                {u?.name}
+              </option>
+            ))}
           </select>
         </div>
 
         <label className="label mt-2">Hospital Name</label>
         <input
           type="text"
+          required
           name="hospitalName"
           placeholder="Dhaka Medical College Hospital"
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Full Address</label>
         <input
           type="text"
           name="address"
+          required
           placeholder="Zahir Raihan Rd, Dhaka"
-          className="input input-bordered w-full"
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Blood Group</label>
-        <select className='select select-bordered w-full' name="bloodGroup" defaultValue='Select Blood Group' id="select">
-          <option disabled={true}>Select Blood Group</option>
+        <select
+          className="select dark:bg-gray-300 select-bordered w-full"
+          name="bloodGroup"
+          required
+          defaultValue=""
+          id="select"
+        >
+          <option value="" disabled>
+            {' '}
+            Blood Group
+          </option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>
           <option value="B+">B+</option>
@@ -176,24 +205,30 @@ const CreateDonationRequest = () => {
         <input
           type="date"
           name="donationDate"
-          className="input input-bordered w-full"
+          required
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Donation Time</label>
         <input
           type="time"
           name="donationTime"
-          className="input input-bordered w-full"
+          required
+          className="input dark:bg-gray-300 input-bordered w-full"
         />
 
         <label className="label mt-2">Request Message</label>
         <textarea
           name="message"
-          className="textarea textarea-bordered w-full"
+          required
+          className="textarea dark:bg-gray-300 textarea-bordered w-full"
           placeholder="Please explain in detail why the blood is needed."
         ></textarea>
 
-        <button type="submit" className=" w-full mt-4 bg-[#B11226]  text-white text-lg p-3">
+        <button
+          type="submit"
+          className=" w-full mt-4 bg-[#B11226] rounded text-white text-lg p-3 cursor-pointer"
+        >
           Request Blood
         </button>
       </form>

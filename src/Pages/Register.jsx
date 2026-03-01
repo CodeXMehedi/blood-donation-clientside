@@ -139,7 +139,7 @@ const Register = () => {
           const errorCode = error.code;
           const errorMessage = error.message;
           if (errorCode && errorMessage) {
-            toast.error(errorMessage, errorCode);
+            toast.error(errorCode,errorMessage);
           }
         });
     }
@@ -153,23 +153,49 @@ const Register = () => {
   }
   return (
     <DocumentMeta {...meta}>
-      <div className='flex justify-center items-center  lg:min-h-screen  my-2'>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl  border-2 border-[#B11226]">
-          <h2 className='bg-[#B11226] p-4 text-center font-semibold text-2xl text-white '>Register Your Account</h2>
+      <div className="flex justify-center items-center  lg:min-h-screen  my-10">
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl rounded ">
+          <h2 className="bg-[#B11226] p-4 text-center font-semibold text-2xl text-white ">
+            Register Your Account
+          </h2>
           <form onSubmit={handleRegister} className="card-body">
             <fieldset className="fieldset">
               <label className="label">Name</label>
-              <input name='name' type="text" className="input" placeholder="Name" required />
+              <input
+                name="name"
+                type="text"
+                className="input"
+                placeholder="Name"
+                required
+              />
               {error && <p className="text-xs text-error">{error}</p>}
 
               <label className="label">Photo URL</label>
-              <input name='photo' type="file" className="input" placeholder="Photo URL" required />
+              <input
+                name="photo"
+                type="file"
+                className="input"
+                placeholder="Photo URL"
+                required
+              />
 
               <label className="label">Email</label>
-              <input name='email' type="email" className="input" placeholder="Email" required />
+              <input
+                name="email"
+                type="email"
+                className="input"
+                placeholder="Email"
+                required
+              />
 
               <label className="label">Select Blood Group</label>
-              <select className='select' name="bloodGroup" defaultValue='Select Blood Group' id="select" required>
+              <select
+                className="select"
+                name="bloodGroup"
+                required
+                defaultValue="Select Blood Group"
+                id="select"
+              >
                 <option disabled={true}>Select Blood Group</option>
                 <option value="A+">A+</option>
                 <option value="A-">A-</option>
@@ -181,68 +207,97 @@ const Register = () => {
                 <option value="AB-">AB-</option>
               </select>
 
-
               <label className="label">Select your Upazila</label>
 
-              <select value={upazila} onChange={(e) => setUpazila(e.target.value)} className='select' required>
-                <option disabled  value=''>Select your Upazila</option>
-                {
-                  upazilas.map(u => <option value={u?.name} key={u.id}>{u?.name}</option>)
-                }
+              <select
+                value={upazila}
+                onChange={e => setUpazila(e.target.value)}
+                className="select"
+                required
+              >
+                <option disabled value="">
+                  Select your Upazila
+                </option>
+                {upazilas.map(u => (
+                  <option value={u?.name} key={u.id}>
+                    {u?.name}
+                  </option>
+                ))}
               </select>
 
               <label className="label">Select your district</label>
 
-              <select value={district} onChange={(e)=>setDistrict(e.target.value)} className='select' required>
-                <option disabled  value="">Select your district</option>
-                {
-                  districts.map(d => <option value={d?.name} key={d.id}>{ d?.name}</option>)
-                }
+              <select
+                value={district}
+                onChange={e => setDistrict(e.target.value)}
+                className="select"
+                required
+              >
+                <option disabled value="">
+                  Select your district
+                </option>
+                {districts.map(d => (
+                  <option value={d?.name} key={d.id}>
+                    {d?.name}
+                  </option>
+                ))}
               </select>
 
-             
-
-
-              <div className='relative'>
+              <div className="relative">
                 <label className="label">Password</label>
                 <input
-                  
-                  type={showPassword ? 'text' : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   className="input"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={e => setPassword(e.target.value)}
                   placeholder="Password"
-                  required />
+                  required
+                />
                 <button
                   onClick={handleTogglePasswordShow}
-                  className='absolute right-8 top-6'>
+                  className="absolute right-8 top-6"
+                >
                   {showPassword ? <Eye></Eye> : <EyeClosed></EyeClosed>}
-                </button >
+                </button>
               </div>
-              {passwordError && <p className="text-xs text-error">{passwordError}</p>}
+              {passwordError && (
+                <p className="text-xs text-error">{passwordError}</p>
+              )}
 
-
-              <div className='relative'>
+              <div className="relative">
                 <label className="label">Confirm Password</label>
                 <input
-
-                  type={showPassword ? 'text' : "password"}
+                  type={showPassword ? 'text' : 'password'}
                   className="input"
                   value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  onChange={e => setConfirmPassword(e.target.value)}
                   placeholder="Password"
-                  required />
+                  required
+                />
                 <button
                   onClick={handleTogglePasswordShow}
-                  className='absolute right-8 top-6'>
+                  className="absolute right-8 top-6"
+                >
                   {showPassword ? <Eye></Eye> : <EyeClosed></EyeClosed>}
-                </button >
+                </button>
               </div>
-              {confirmPasswordError && <p className="text-xs text-error">{confirmPasswordError}</p>}
-              <div className='flex justify-center  mt-4'>
-                <button type='submit' className=" bg-[#B11226] w-1/3 text-white text-lg p-2">Register</button>
+              {confirmPasswordError && (
+                <p className="text-xs text-error">{confirmPasswordError}</p>
+              )}
+              <div className="flex justify-center  mt-4">
+                <button
+                  type="submit"
+                  className=" bg-[#B11226] w-1/3 text-white text-lg p-2"
+                >
+                  Register
+                </button>
               </div>
-              <p className='font-semibold text-center pt-2 text-lg'>Allready have an account? <NavLink to='/login' className="text-[#B11226]">Login</NavLink></p>
+              <p className="font-semibold text-center pt-2 text-lg">
+                Allready have an account?{' '}
+                <NavLink to="/login" className="text-[#B11226]">
+                  Login
+                </NavLink>
+              </p>
             </fieldset>
           </form>
         </div>

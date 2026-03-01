@@ -61,40 +61,64 @@ const Login = () => {
 
   return (
     <DocumentMeta {...meta}>
-      <div className='flex justify-center items-center  lg:min-h-screen '>
-        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl border-2 border-[#B11226]  ">
-          <h2 className='bg-[#B11226] p-4 text-center font-semibold text-2xl text-white '>Login Your Account</h2>
+      <div className="flex  justify-center items-center  min-h-screen ">
+        <div className="card bg-base-100 w-full max-w-sm shrink-0 shadow-2xl transition duration-500 hover:-translate-y-2  ">
+          <h2 className="bg-[#B11226] p-4 text-center font-semibold text-2xl text-white ">
+            Login Your Account
+          </h2>
           <form onSubmit={handleLogIn} className="card-body ">
             <fieldset className="fieldset text-lg">
-
               <label className="label">Email</label>
-              <input name='email'
+              <input
+                name="email"
                 type="email"
-                onChange={(e) => setLoginEmail(e.target.value)} className="input" placeholder="Email"
-                required />
+                onChange={e => setLoginEmail(e.target.value)}
+                className="input"
+                placeholder="Email"
+                required
+              />
 
               <label className="label">Password</label>
-              <div className='relative'>
-                <input name='password'
-                  type={showPassword ? 'text' : "password"}
+              <div className="relative">
+                <input
+                  name="password"
+                  type={showPassword ? 'text' : 'password'}
                   className="input"
                   placeholder="Password"
-                  required />
+                  required
+                />
                 <button
                   onClick={handleTogglePasswordShow}
-                  className='absolute right-8 top-2'>
+                  className="absolute right-8 top-2"
+                >
                   {showPassword ? <Eye></Eye> : <EyeClosed></EyeClosed>}
                 </button>
               </div>
 
-              <div><NavLink to="/auth/forgot-password"
-                state={{ email: loginEmail }}
-                className="link link-hover">Forgot password?</NavLink></div>
-              {error && <p className="text-red-800 ">{error}</p>}
-              <div className='flex justify-center  mt-4'>
-                <button type='submit' className=" bg-[#B11226] w-1/3 text-white text-lg p-2">Login</button>
+              <div>
+                <NavLink
+                  to="/auth/forgot-password"
+                  state={{ email: loginEmail }}
+                  className="link link-hover"
+                >
+                  Forgot password?
+                </NavLink>
               </div>
-              <p className='font-semibold text-lg text-center pt-5'>Don't have an account? <NavLink to='/register' className="text-red-500">Register</NavLink></p>
+              {error && <p className="text-red-800 ">{error}</p>}
+              <div className="flex justify-center  mt-4">
+                <button
+                  type="submit"
+                  className=" bg-[#B11226] w-1/3 text-white text-lg p-2 cursor-pointer"
+                >
+                  Login
+                </button>
+              </div>
+              <p className="font-semibold text-lg text-center pt-5">
+                Don't have an account?{' '}
+                <NavLink to="/register" className="text-red-500">
+                  Register
+                </NavLink>
+              </p>
             </fieldset>
           </form>
         </div>

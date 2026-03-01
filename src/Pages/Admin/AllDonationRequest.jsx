@@ -4,26 +4,39 @@ import toast from 'react-hot-toast';
 import { AuthContext } from '../../Contexts/AuthContext';
 import { Link } from 'react-router';
 
+
 const AllDonationRequest = () => {
   const { user } = useContext(AuthContext);
   const [allRequest, setAllRequest] = useState([]);
-   const [statusFilter, setStatusFilter] = useState('all');
+  const [statusFilter, setStatusFilter] = useState('all');
+  const [currentPage, setCurrentPage] = useState(0);
+  const [totalPage, setTotalPage] = useState(0);
+  const limit = 10;
+
    const axiosSecure = useAxiosSecure();
   const [userData, setUserData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const requestsRes = await axiosSecure.get('/all-donation-request');
+        const requestsRes =
+          await
+          axiosSecure
+          
+          .get(
+          `/all-donation-request?limit=${limit}&skip=${currentPage * limit}`,
+        );
         const usersRes = await axiosSecure.get(`/users/by-email?email=${user?.email}`);
-          setAllRequest(requestsRes.data);
+          setAllRequest(requestsRes.data.result);
         setUserData(usersRes.data);
+         const page = Math.ceil(requestsRes.data.total / limit);
+         setTotalPage(page);
       } catch (err) {
         console.log(err);
       }
     }
     fetchData();
-  },[axiosSecure])
+  },[axiosSecure,currentPage])
 console.log(userData)
   const handleDoneCancel = async (id, status) => {
    
@@ -60,9 +73,10 @@ console.log(userData)
 
   return (
     <div>
-      <div className="flex min-h-screen justify-center items-center">
+      <div className=" flex justify-center items-center min-h-screen ">
+        
         <div className="flex flex-col justify-center items-center">
-          <h3 className="text-4xl font-semibold mb-8 text-primary">
+          <h3 className="text-4xl font-semibold mb-8 text-[#8a0303]">
             All Blood Donation Requests{' '}
           </h3>
           <select
@@ -80,7 +94,7 @@ console.log(userData)
           <div className="overflow-x-auto">
             <table className="table table-xs">
               <thead>
-                <tr>
+                <tr className="text-lg">
                   <th>Recipient Name</th>
                   <th>Recipient location</th>
                   <th>Donation date</th>
@@ -110,7 +124,8 @@ console.log(userData)
                       <td>{r.bloodGroup}</td>
                       <td>{r.donationStatus}</td>
                       <td className="flex gap-2">
-                        {(userData.role === 'admin' || userData.role === 'volunteer') &&
+                        {(userData.role === 'admin' ||
+                          userData.role === 'volunteer') &&
                           r.donationStatus == 'Inprogress' && (
                             <Link
                               onClick={() => {
@@ -121,7 +136,8 @@ console.log(userData)
                               Done
                             </Link>
                           )}
-                        {(userData.role === 'admin' || userData.role === 'volunteer') &&
+                        {(userData.role === 'admin' ||
+                          userData.role === 'volunteer') &&
                           r.donationStatus == 'Inprogress' && (
                             <Link
                               onClick={() => {
@@ -155,6 +171,34 @@ console.log(userData)
             </table>
           </div>
         </div>
+      </div>
+      <div className="flex justify-center flex-wrap gap-3 lg:py-10">
+        {currentPage > 0 && (
+          <button
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="btn"
+          >
+            Prev
+          </button>
+        )}
+
+        {[...Array(totalPage).keys()].map(i => (
+          <button
+            key={i}
+            onClick={() => setCurrentPage(i)}
+            className={`btn ${i === currentPage && 'bg-[#b11226]'}`}
+          >
+            {i + 1}
+          </button>
+        ))}
+        {currentPage < totalPage - 1 && (
+          <button
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="btn"
+          >
+            Next
+          </button>
+        )}
       </div>
     </div>
   );

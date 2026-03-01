@@ -7,7 +7,7 @@ import Footer from '../Components/Footer';
 
 const RootLayout = () => {
   return (
-    <div className='bg-[#E8F5F0]'>
+    <div className="bg-linear-to-br from-red-100 via-white to-red-100   dark:bg-linear-to-br dark:from-gray-900 dark:via-gray-800 dark:to-black">
       <Navbar></Navbar>
       <Outlet></Outlet>
       {/* <Featured></Featured>

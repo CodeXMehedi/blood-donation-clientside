@@ -2,22 +2,20 @@ import React from 'react';
 import {  FaHandsHelping, FaHospital, FaTint } from 'react-icons/fa';
 const Featured = () => {
   return (
-    <div>
+    <div className="w-11/12 mx-auto">
       <div className="md:py-25 py-20 ">
         <div className="text-center mb-16">
-          <h2 className="text-2xl md:text-5xl font-bold text-secondary">
-            Why Donate Blood?
+          <h2 className="text-2xl md:text-5xl font-bold text-primary dark:text-[#8a0303]  ">
+            Every Drop Matters
           </h2>
-          <p className="mt-4 text-gray-600 max-w-10/12 mx-auto text-center ">
-            Your small act of kindness can become someone's
-            biggest hope. Join
-            our community and make a life-saving
-            difference today.
+          <p className="mt-4 text-gray-600 max-w-8/12 mx-auto text-center text-lg dark:text-white">
+            Your small act of kindness can become someone's biggest hope. Join
+            our community and make a life-saving difference today.
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-10 px-6 max-w-11/12 md:max-w-6xl mx-auto">
-          <div className="bg-white rounded-2xl p-8 text-center shadow-md hover:shadow-2xl transition duration-500 hover:-translate-y-3">
+        <div className="grid md:grid-cols-3 gap-10 px-6 w-11/12 md:max-w-6xl mx-auto">
+          <div className="bg-white rounded p-8 text-center shadow-md hover:shadow-2xl transition duration-500 hover:-translate-y-3">
             <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full bg-red-100">
               <span className="text-4xl text-red-700">
                 <FaTint></FaTint>
@@ -34,7 +32,7 @@ const Featured = () => {
           </div>
 
           {/* Card 2 */}
-          <div className="bg-white rounded-2xl p-8 text-center shadow-md hover:shadow-2xl transition duration-500 hover:-translate-y-3">
+          <div className="bg-white rounded p-8 text-center shadow-md hover:shadow-2xl transition duration-500 hover:-translate-y-3">
             <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full bg-yellow-100">
               <span className="text-4xl text-red-600">
                 <FaHandsHelping></FaHandsHelping>
@@ -51,7 +49,7 @@ const Featured = () => {
           </div>
 
           {/* Card 3 */}
-          <div className="bg-white rounded-2xl p-8 text-center shadow-md hover:shadow-2xl transition duration-500 hover:-translate-y-3">
+          <div className="bg-white rounded p-8 text-center shadow-md hover:shadow-2xl transition duration-500 hover:-translate-y-3">
             <div className="w-20 h-20 mx-auto mb-6 flex items-center justify-center rounded-full bg-blue-100">
               <span className="text-4xl">🏥</span>
             </div>
